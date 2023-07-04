@@ -10,7 +10,7 @@ import {
 import { userSideDrawerVar } from '../../graphql/reactivities/toogleVariable';
 import { loggedInUserVar } from '../../graphql/reactivities/userVariable';
 import { useReactiveVar } from '@apollo/client';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useIsBrowser } from '@src/hooks';
 const Atopbar = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const Atopbar = () => {
           </div>
           {/* the logo */}
           <div className="cursor-pointer">
-            <Link href="/admin">
+            <Link href="/">
               <div>
                 {/* <Image src="/pumpkinLogo.png" height={50} width={50} /> */}
                 <h1 className="text-2xl font-bold text-yellow-600">
