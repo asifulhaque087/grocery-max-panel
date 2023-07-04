@@ -18,10 +18,10 @@ export const adminAuth = () => {
       if (decript.role === 'admin') {
         setIsAuthenticated(true);
       } else {
-        Router.replace('/admin/login');
+        Router.replace('/login');
       }
     } else {
-      Router.replace('/admin/login');
+      Router.replace('/login');
     }
   }, []);
 

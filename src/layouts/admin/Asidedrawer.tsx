@@ -15,7 +15,7 @@ const Asidedrawer = () => {
       {
         name: "home",
         icon: "",
-        to: "/admin",
+        to: "/",
         childrens: [],
         open: false,
       },
@@ -26,11 +26,11 @@ const Asidedrawer = () => {
         childrens: [
           {
             name: "add banner",
-            to: "/admin/banner/add",
+            to: "/banner/add",
           },
           {
             name: "list banner",
-            to: "/admin/banner",
+            to: "/banner",
           },
         ],
         open: false,
@@ -42,11 +42,11 @@ const Asidedrawer = () => {
         childrens: [
           {
             name: "add category",
-            to: "/admin/category/add",
+            to: "/category/add",
           },
           {
             name: "list category",
-            to: "/admin/category",
+            to: "/category",
           },
         ],
         open: false,
@@ -58,18 +58,18 @@ const Asidedrawer = () => {
         childrens: [
           {
             name: "add product",
-            to: "/admin/product/add",
+            to: "/product/add",
           },
           {
             name: "list product",
-            to: "/admin/product",
+            to: "/product",
           },
         ],
         open: false,
       },
       {
         name: "order",
-        to: "/admin/order",
+        to: "/order",
         icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
         open: false,
       },
