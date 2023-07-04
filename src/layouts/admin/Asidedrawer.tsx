@@ -5,8 +5,10 @@ import { HomeIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useIsBrowser } from "@src/hooks";
 
 const Asidedrawer = () => {
+  const isBrowser = useIsBrowser();
   const [state, setState] = useState({
     colors: ["red", "indigo", "green", "yellow", "blue", "purple"],
     urls: [
@@ -113,6 +115,8 @@ const Asidedrawer = () => {
       }),
     });
   };
+
+  if (!isBrowser) return null;
 
   return (
     <AnimatePresence>

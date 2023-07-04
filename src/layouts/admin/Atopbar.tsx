@@ -1,19 +1,23 @@
-import Link from "next/link";
+import Link from 'next/link';
 import {
   Bars3Icon,
   QuestionMarkCircleIcon,
   ArrowLeftOnRectangleIcon,
- ComputerDesktopIcon,
-} from "@heroicons/react/24/solid";
-import { LoginIcon } from "@heroicons/react/outline";
+  ArrowRightOnRectangleIcon,
+  ComputerDesktopIcon,
+} from '@heroicons/react/24/solid';
 // import Image from "next/image";
-import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
-import { loggedInUserVar } from "../../graphql/reactivities/userVariable";
-import { useReactiveVar } from "@apollo/client";
-import { useRouter } from "next/router";
+import { userSideDrawerVar } from '../../graphql/reactivities/toogleVariable';
+import { loggedInUserVar } from '../../graphql/reactivities/userVariable';
+import { useReactiveVar } from '@apollo/client';
+import { useRouter } from 'next/router';
+import { useIsBrowser } from '@src/hooks';
 const Atopbar = () => {
   const router = useRouter();
+  const isBrowser = useIsBrowser();
+
   const loggedInUser: any = useReactiveVar(loggedInUserVar);
+  if (!isBrowser) return null;
   return (
     <>
       <div className="fixed w-full bg-white z-10">
@@ -73,14 +77,14 @@ const Atopbar = () => {
           {/* sign in  */}
           <div className=" px-2 md:px-4">
             <div className="font-medium cursor-pointer">
-              {typeof window !== "undefined" && loggedInUser ? (
+              {typeof window !== 'undefined' && loggedInUser ? (
                 <div>
                   <div
                     className="flex"
                     onClick={() => {
-                      sessionStorage.removeItem("jwtToken");
+                      sessionStorage.removeItem('jwtToken');
                       loggedInUserVar(null);
-                      router.push("/admin/login");
+                      router.push('/admin/login');
                     }}
                   >
                     <ArrowLeftOnRectangleIcon className="h-7 text-yellow-500" />
@@ -92,7 +96,7 @@ const Atopbar = () => {
               ) : (
                 <Link href="/login" prefetch={false}>
                   <div className="flex">
-                    <LoginIcon className="h-7 text-yellow-500" />
+                    <ArrowRightOnRectangleIcon className="h-7 text-yellow-500" />
                     <span className="whitespace-nowrap hidden sm:inline">
                       Sign in
                     </span>
