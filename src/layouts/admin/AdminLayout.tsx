@@ -8,10 +8,10 @@ import Atopbar from './Atopbar';
 import { adminAuth } from '@src/hooks';
 
 const AdminLayout = (props) => {
-  // const isAuthenticated = adminAuth();
+  const isAuthenticated = adminAuth();
   const userSideDrawer = useReactiveVar(userSideDrawerVar);
 
-  // if (!isAuthenticated) return null;
+  if (!isAuthenticated) return null;
   return (
     <div>
       <Atopbar />

@@ -6,8 +6,18 @@ import { Button } from './Button';
 import { FullPageLoading } from './FullPageLoading';
 import { Product } from './Product';
 import { Category } from './Category';
+import { AuthTextField } from './AuthTextField';
 import { TextField } from './TextField';
 import { Row } from './Row';
 import { Tree } from './Tree';
 
-export { Button, FullPageLoading, Product, Category, TextField, Row, Tree };
+export {
+  Button,
+  FullPageLoading,
+  Product,
+  Category,
+  TextField,
+  Row,
+  Tree,
+  AuthTextField,
+};
