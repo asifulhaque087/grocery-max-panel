@@ -1,30 +1,28 @@
+'use client';
 
-
-import Link from "next/link";
-import moment from "moment";
-import { TrashIcon, PencilIcon} from "@heroicons/react/24/solid";
-import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import Link from 'next/link';
+import moment from 'moment';
+import { TrashIcon, PencilIcon } from '@heroicons/react/24/solid';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 // import { withApollo } from "../../../graphql/client";
-import AdminLayout from "../../../layouts/admin/AdminLayout";
-import { GET_CATEGORIES_BY_ADMIN } from "../../../graphql/queries/categoryQuery";
-import { DELETE_CATEGORY } from "../../../graphql/mutations/categoryMutation";
-import { storeIdVar } from "../../../graphql/reactivities/storeIdVariable";
-import { TableLoading } from "@src/components/compounds";
+import { GET_CATEGORIES_BY_ADMIN } from '../../../graphql/queries/categoryQuery';
+import { DELETE_CATEGORY } from '../../../graphql/mutations/categoryMutation';
+import { storeIdVar } from '../../../graphql/reactivities/storeIdVariable';
+import { TableLoading } from '@src/components/compounds';
 
-export const CategoryListPage = ({categories, queryLoading}) => {
+export const CategoryListPage = () => {
   const storeId = useReactiveVar(storeIdVar);
 
-//   const {
-//     loading: queryLoading,
-//     data: { getCategoriesByAdmin: categories } = {},
-//   } = useQuery(GET_CATEGORIES_BY_ADMIN);
-
+  const {
+    loading: queryLoading,
+    data: { getCategoriesByAdmin: categories } = {},
+  } = useQuery(GET_CATEGORIES_BY_ADMIN);
 
   const [deleteCategory, { loading: mutationLoading }] =
     useMutation(DELETE_CATEGORY);
 
   return (
-    <AdminLayout>
+    <>
       {/* breadcum */}
       <div className="block sm:flex items-center justify-between px-5 bg-gray-50">
         <div>
@@ -112,7 +110,7 @@ export const CategoryListPage = ({categories, queryLoading}) => {
                           {/* { new Date( category. createdAt) } */}
                           {moment
                             .unix(category.createdAt)
-                            .subtract(10, "days")
+                            .subtract(10, 'days')
                             .calendar()}
                         </td>
                         <td
@@ -123,7 +121,7 @@ export const CategoryListPage = ({categories, queryLoading}) => {
                           <button
                             className="mr-2"
                             onClick={async () => {
-                              if (window.confirm("Are you sure ?") == true) {
+                              if (window.confirm('Are you sure ?') == true) {
                                 storeIdVar(category.id);
                                 await deleteCategory({
                                   variables: { id: category.id },
@@ -140,7 +138,7 @@ export const CategoryListPage = ({categories, queryLoading}) => {
                               className={`h-5 text-red-500 ${
                                 mutationLoading &&
                                 category.id == storeId &&
-                                "animate-spin"
+                                'animate-spin'
                               }`}
                             />
                           </button>
@@ -158,6 +156,6 @@ export const CategoryListPage = ({categories, queryLoading}) => {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 };
