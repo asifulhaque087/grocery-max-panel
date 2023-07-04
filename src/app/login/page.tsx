@@ -1,9 +1,10 @@
-import { LoginPage } from "@src/components/pages";
+// import { LoginPage } from "@src/components/pages";
 
 const page = () => {
   return (
     <div>
-      <LoginPage />
+      {/* <LoginPage /> */}
+      this is login page
     </div>
   );
 };
