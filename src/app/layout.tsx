@@ -1,10 +1,10 @@
 'use client';
 
-import DefaultLayout from '@src/layouts/default/DefaultLayout';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ApolloProvider } from '@apollo/client';
 import client from '@src/graphql/client';
+import AdminLayout from '@src/layouts/admin/AdminLayout';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,12 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body 
+      <body
       // className={inter.className}
       >
         <ApolloProvider client={client}>
           {/* <UniversalNoticeModal /> */}
-          <DefaultLayout>{children}</DefaultLayout>
+          <AdminLayout>{children}</AdminLayout>
         </ApolloProvider>
       </body>
     </html>
