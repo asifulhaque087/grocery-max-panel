@@ -1,6 +1,9 @@
+import { HomePage } from '@src/components/pages';
 
 export default async function Home() {
-  return <div>
-    this is home
-  </div>
+  return (
+    <div>
+      <HomePage />
+    </div>
+  );
 }
