@@ -8,4 +8,4 @@ import { RegisterPage } from './RegisterPage';
 import { CategoryAdd } from './category/CategoryAdd';
 import { CategoryEdit } from './category/CategoryEdit';
 
-export { HomePage, LoginPage, RegisterPage, CategoryAdd };
+export { HomePage, LoginPage, RegisterPage, CategoryAdd , CategoryEdit};
