@@ -1,5 +1,5 @@
 
-export const CategoryAdd = () => {
+export const CategoryAddPage = () => {
   return (
     <div>CategoryAdd</div>
   )
