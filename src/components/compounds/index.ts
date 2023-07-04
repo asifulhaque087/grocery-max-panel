@@ -3,5 +3,6 @@
  */
 
 import { RecursiveSidebar } from './RecursiveSidebar';
+import { TableLoading } from './loading/TableLoading';
 
-export { RecursiveSidebar };
+export { RecursiveSidebar, TableLoading };
