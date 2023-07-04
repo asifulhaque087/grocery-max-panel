@@ -1,7 +1,7 @@
 
 const page = () => {
   return (
-    <div>this is category list page</div>
+    <div>this is category edit page</div>
   )
 }
 
