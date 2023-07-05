@@ -2,8 +2,7 @@
 
 import { IRow } from '@src/types/roots';
 import { IOpenId } from '@src/types/roots/Row';
-import Link from 'next/link';
-import { RxCaretRight, RxCaretDown } from 'react-icons/rx';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 
 export const Row = ({
   item,
@@ -14,7 +13,9 @@ export const Row = ({
   openIds,
   setOpenIds,
   childIsAParent,
-}: IRow) => {
+}: // selectParentCategory,
+// outerParent,
+IRow) => {
   const shouldExpand = () => {
     let exits = false;
     if (openIds.length) {
@@ -29,72 +30,84 @@ export const Row = ({
   };
 
   return (
-    <div key={`section-${item.id}`} className="">
+    <div
+      key={`section-${item.id}`}
+      className="bg-white rounded-md"
+      style={{
+        marginTop: `${level == 1 ? 15 : 5}px`,
+        padding: `${level == 1 && shouldExpand() ? 15 : 0}px`,
+      }}
+    >
       <div
-        className="mb- rounded p-[5px] cursor-pointer hover:bg-primary/[.5]"
+        className={`mb- rounded p-[5px] cursor-pointer  border ${
+          activeId == item.id ? 'bg-blue-500 text-white' : ''
+        }`}
         // we are setting the condition for next click
         onClick={() => {
-          let newIds: IOpenId[] = [];
-          let exits = false;
-          let levelExits = false;
-
-          for (let i = 0; i < openIds.length; i++) {
-            if (openIds[i].id == item.id) {
-              exits = true;
-            }
-
-            if (openIds[i].level == level) {
-              levelExits = true;
-            }
-
-            if (exits || levelExits) {
-              // console.log("some one exits");
-            } else {
-              newIds.push(openIds[i]);
-            }
-          }
-
-          // console.log("level exits ", levelExits);
-          // console.log("item exits ", exits);
-          // console.log("openids are ", openIds);
-
-          if (levelExits) {
-            if (exits) setOpenIds(newIds);
-            else setOpenIds([...newIds, { id: item.id, level }]);
-          } else {
-            if (exits) setOpenIds(newIds);
-            else setOpenIds([...openIds, { id: item.id, level }]);
-          }
-
+          // selectParentCategory(item.id);
           toggleActive(item.id);
         }}
       >
         {/* avatar  */}
 
-        <Link
-          // href={`${haveChild ? `/${item.id}` : `/${item.id}`}`}
-          href={`/${item.id}`}
+        <div>
+          <div className={`flex items-center gap-2 `}>
+            {childIsAParent ? (
+              <div
+                className="grid place-items-center p-[5px] rounded-sm  bg-[#D8D8D8]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  let newIds: IOpenId[] = [];
+                  let exits = false;
+                  let levelExits = false;
 
-          // prefetch={false}
-        >
-          <div className="flex items-center gap-2">
-            {/* if item.iconUrl then show image */}
-            {item.photo ? <img width="20" src={item.photo} alt="icon" /> : null}
+                  for (let i = 0; i < openIds.length; i++) {
+                    if (openIds[i].id == item.id) {
+                      exits = true;
+                    }
+
+                    if (openIds[i].level == level) {
+                      levelExits = true;
+                    }
+
+                    if (exits || levelExits) {
+                      // console.log("some one exits");
+                    } else {
+                      newIds.push(openIds[i]);
+                    }
+                  }
+
+                  // console.log("level exits ", levelExits);
+                  // console.log("item exits ", exits);
+                  // console.log("openids are ", openIds);
+
+                  if (levelExits) {
+                    if (exits) setOpenIds(newIds);
+                    else setOpenIds([...newIds, { id: item.id, level }]);
+                  } else {
+                    if (exits) setOpenIds(newIds);
+                    else setOpenIds([...openIds, { id: item.id, level }]);
+                  }
+                }}
+              >
+                <span>
+                  {shouldExpand() ? (
+                    <FaMinus size={10} />
+                  ) : (
+                    <FaPlus size={10} />
+                  )}
+                </span>
+              </div>
+            ) : null}
             <p
               className={`text-[13px] ${
-                item.id == activeId ? 'text-red-600 font-bold' : null
+                item.id == activeId ? 'font-bold' : null
               }`}
             >
               {item.name}
             </p>
-
-            {childIsAParent && (
-              <span className="ml-auto">
-                {shouldExpand() ? <RxCaretDown /> : <RxCaretRight />}
-              </span>
-            )}
           </div>
-        </Link>
+        </div>
       </div>
 
       {/* children */}
