@@ -17,7 +17,7 @@ const AdminLayout = (props) => {
       <Atopbar />
       <div className={`${userSideDrawer ? 'ml-0 md:ml-64' : 'ml-0 md:ml-0'} `}>
         <Asidedrawer {...props} />
-        {props.children}
+        <div className="bg-[rgb(248,247,250)]">{props.children}</div>
       </div>
     </div>
   );
