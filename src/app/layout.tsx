@@ -1,11 +1,12 @@
 'use client';
 
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Inter, Public_Sans } from 'next/font/google';
 import { ApolloProvider } from '@apollo/client';
 import client from '@src/graphql/client';
 
 const inter = Inter({ subsets: ['latin'] });
+const publicSans = Public_Sans({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Create Next App',
@@ -19,9 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-      // className={inter.className}
-      >
+      <body className={publicSans.className}>
         <ApolloProvider client={client}>{children}</ApolloProvider>
       </body>
     </html>
