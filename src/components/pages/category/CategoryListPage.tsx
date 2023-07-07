@@ -142,7 +142,7 @@ export const CategoryListPage = () => {
                               }`}
                             />
                           </button>
-                          <Link href={`/admin/category/edit/${category.id}`}>
+                          <Link href={`/category/edit/${category.id}`}>
                             <button className="ml-2">
                               <PencilIcon className="h-5 text-yellow-500" />
                             </button>
