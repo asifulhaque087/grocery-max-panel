@@ -1,8 +1,13 @@
+// "use client"
 
-const page = () => {
+import { CategoryEditPage } from '@src/components/pages';
+
+const page = ({ params }: { params: { categoryId: string } }) => {
   return (
-    <div>this is category edit page</div>
-  )
-}
+    <div>
+      <CategoryEditPage categoryId={params.categoryId} />
+    </div>
+  );
+};
 
-export default page
+export default page;

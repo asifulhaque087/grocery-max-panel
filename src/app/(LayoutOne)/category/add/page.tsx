@@ -1,8 +1,11 @@
+import { CategoryAddPage } from '@src/components/pages';
 
 const page = () => {
   return (
-    <div>this is category add page</div>
-  )
-}
+    <div>
+      <CategoryAddPage />
+    </div>
+  );
+};
 
-export default page
+export default page;
