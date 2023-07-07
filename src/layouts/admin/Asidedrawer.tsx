@@ -1,80 +1,106 @@
-import Link from "next/link";
-import { useReactiveVar } from "@apollo/client";
-import { HomeIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-// import { withApollo } from "../../graphql/client";
-import { userSideDrawerVar } from "../../graphql/reactivities/toogleVariable";
-import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useIsBrowser } from "@src/hooks";
+import Link from 'next/link';
+import { useReactiveVar } from '@apollo/client';
+import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useIsBrowser } from '@src/hooks';
+import { CiHome } from 'react-icons/ci';
+import { BiCategoryAlt, BiCart } from 'react-icons/bi';
+import { BsBagDash } from 'react-icons/bs';
+import { GiTatteredBanner } from 'react-icons/gi';
+import { LiaAngleRightSolid } from 'react-icons/lia';
+import { LiaAngleDownSolid } from 'react-icons/lia';
+import { userSideDrawerVar } from '@src/graphql/reactivities/toogleVariable';
+import { RxDot } from 'react-icons/rx';
+
+const LinkWrapper = ({ href, children, ...props }) => {
+  // console.log('href are ', href);
+  // console.log('children is', children);
+
+  if (href == '#') {
+    return <div {...props}>{children}</div>;
+  }
+
+  return (
+    <Link href={href} {...props}>
+      {children}
+    </Link>
+  );
+};
 
 const Asidedrawer = () => {
   const isBrowser = useIsBrowser();
-  const [state, setState] = useState({
-    colors: ["red", "indigo", "green", "yellow", "blue", "purple"],
-    urls: [
-      {
-        name: "home",
-        icon: "",
-        to: "/",
-        childrens: [],
-        open: false,
-      },
-      {
-        name: "banner",
-        icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
-        // to: "",
-        childrens: [
-          {
-            name: "add banner",
-            to: "/banner/add",
-          },
-          {
-            name: "list banner",
-            to: "/banner",
-          },
-        ],
-        open: false,
-      },
-      {
-        name: "category",
-        icon: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
-        // to: "",
-        childrens: [
-          {
-            name: "add category",
-            to: "/category/add",
-          },
-          {
-            name: "list category",
-            to: "/category",
-          },
-        ],
-        open: false,
-      },
-      {
-        name: "product",
-        icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
-        // to: "",
-        childrens: [
-          {
-            name: "add product",
-            to: "/product/add",
-          },
-          {
-            name: "list product",
-            to: "/product",
-          },
-        ],
-        open: false,
-      },
-      {
-        name: "order",
-        to: "/order",
-        icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
-        open: false,
-      },
-    ],
-  });
+
+  const [colors, setColors] = useState([
+    'red',
+    'indigo',
+    'green',
+    'yellow',
+    'blue',
+    'purple',
+  ]);
+
+  const [urls, setUrls] = useState([
+    {
+      name: 'home',
+      to: '/',
+      childrens: [],
+      open: false,
+      icon: CiHome,
+    },
+    {
+      name: 'banner',
+      icon: GiTatteredBanner,
+      // to: "",
+      childrens: [
+        {
+          name: 'add banner',
+          to: '/banner/add',
+        },
+        {
+          name: 'list banner',
+          to: '/banner',
+        },
+      ],
+      open: false,
+    },
+    {
+      name: 'category',
+      icon: BiCategoryAlt,
+      // to: "",
+      childrens: [
+        {
+          name: 'add category',
+          to: '/category/add',
+        },
+        {
+          name: 'list category',
+          to: '/category',
+        },
+      ],
+      open: false,
+    },
+    {
+      name: 'product',
+      icon: BiCart,
+      childrens: [
+        {
+          name: 'add product',
+          to: '/product/add',
+        },
+        {
+          name: 'list product',
+          to: '/product',
+        },
+      ],
+      open: false,
+    },
+    {
+      name: 'order',
+      to: '/order',
+      icon: BsBagDash,
+      open: false,
+    },
+  ]);
   const userSideDrawer = useReactiveVar(userSideDrawerVar);
 
   useEffect(() => {
@@ -87,9 +113,9 @@ const Asidedrawer = () => {
         userSideDrawerVar(true);
       }
     }
-    window.addEventListener("resize", updateSize);
+    window.addEventListener('resize', updateSize);
     updateSize();
-    return () => window.removeEventListener("resize", updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
 
   const BigSreen = {
@@ -101,10 +127,9 @@ const Asidedrawer = () => {
     },
   };
 
-  const toggleUrl = (index) => {
-    setState({
-      ...state,
-      urls: state.urls.map((url, i) => {
+  const toggleUrl = (index: number) => {
+    setUrls(
+      urls.map((url, i) => {
         if (i === index) {
           url.open = !url.open;
         } else {
@@ -112,8 +137,8 @@ const Asidedrawer = () => {
         }
 
         return url;
-      }),
-    });
+      })
+    );
   };
 
   if (!isBrowser) return null;
@@ -126,87 +151,75 @@ const Asidedrawer = () => {
             initial="hidden"
             animate="show"
             exit={{
-              x: "-100%",
+              x: '-100%',
             }}
             variants={BigSreen}
             className={`mt-14 fixed inset-y-0 left-0 z-10`}
+            style={{
+              boxShadow: `0 2px 6px rgba(47, 43, 61, .14),0 0 transparent,0 0 transparent`,
+            }}
           >
             <div className=" h-screen  w-64 border-r bg-white ">
               <div className="h-full overflow-x-hidden overflow-y-auto">
                 <>
-                  <motion.ul layout>
-                    {state.urls &&
-                      state.urls.map((url, i) => (
-                        <div key={i}>
-                          <motion.li
-                            layout
-                            whileHover={{
-                              backgroundColor: "rgba(255,153,51,.5)",
-                              transition: { duration: 1 },
-                            }}
-                            onClick={() => toggleUrl(i)}
-                            className="mx-1 rounded  capitalize text-sm cursor-pointer py-2"
+                  {/* <LinkWrapper href={`/category/add`}>
+                          <div>add</div>
+                        </LinkWrapper> */}
+
+                  {urls.map((ur, i) => (
+                    <div
+                      key={i}
+                      className="px-[10px] text-[15px]  text-[#2f2b3dad] capitalize mt-[15px] cursor-pointer"
+                    >
+                      {!ur.childrens?.length ? (
+                        <LinkWrapper href={`${ur.to}`}>
+                          <div className="flex items-center gap-[10px]">
+                            {ur.icon ? <ur.icon size={15} /> : null}
+                            <p>{ur.name}</p>
+                          </div>
+                        </LinkWrapper>
+                      ) : (
+                        <div onClick={() => toggleUrl(i)}>
+                          <div className="flex items-center gap-[10px]">
+                            {ur.icon ? <ur.icon size={15} /> : null}
+                            <p>{ur.name}</p>
+
+                            <div className="ml-auto">
+                              {ur.open ? (
+                                <LiaAngleDownSolid size={15} />
+                              ) : (
+                                <LiaAngleRightSolid size={15} />
+                              )}
+                            </div>
+                          </div>
+                          <div
+                            className={`pl-[10px] ${
+                              ur.open ? 'block' : 'hidden'
+                            }`}
                           >
-                            <Link
-                              href={`${url.hasOwnProperty("to") ? url.to : ""}`}
-                            >
-                              <div className=" py-1 px-2 w-full flex items-center">
-                                <span>
-                                  <HomeIcon
-                                    className={`h-5 mr-3 text-${
-                                      state.colors[
-                                        Math.floor(
-                                          Math.random() * state.colors.length
-                                        )
-                                      ]
-                                    }-600`}
-                                  />
-                                </span>
-                                <span className="mr-auto font-medium text-gray-800">
-                                  {url.name}
-                                </span>
-                                {!url.hasOwnProperty("to") && (
-                                  <span>
-                                    <ChevronRightIcon className="h-3 mr-3 text-gray-500" />
-                                  </span>
-                                )}
+                            {ur.childrens.map((ch) => (
+                              <div
+                                className="mt-[15px]"
+                                key={Math.random() * i}
+                              >
+                                <LinkWrapper
+                                  onClick={(e: React.MouseEvent) =>
+                                    e.stopPropagation()
+                                  }
+                                  href={`${ch.to}`}
+                                >
+                                  <div className="flex items-center gap-[10px]">
+                                    <RxDot size={15} />
+                                    <p>{ch.name}</p>
+                                  </div>
+                                </LinkWrapper>
                               </div>
-                            </Link>
-                          </motion.li>
-                          <AnimatePresence>
-                            {url.childrens &&
-                              url.open &&
-                              url.childrens.map((child, i) => {
-                                return (
-                                  <motion.div
-                                    layout
-                                    key={i}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    whileHover={{
-                                      backgroundColor: "rgba(255,153,51,.5)",
-                                      margin: "0 10px",
-                                      borderRadius: "10px",
-                                      transition: { duration: 1 },
-                                    }}
-                                    className="border-l-4 border-green-700"
-                                  >
-                                    <Link href={`${child.to}`} prefetch={false}>
-                                      <div
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="pl-14 py-2 cursor-pointer"
-                                      >
-                                        {child.name}
-                                      </div>
-                                    </Link>
-                                  </motion.div>
-                                );
-                              })}
-                          </AnimatePresence>
+                            ))}
+                          </div>
                         </div>
-                      ))}
-                  </motion.ul>
+                      )}
+                    </div>
+                  ))}
                 </>
               </div>
             </div>
@@ -219,7 +232,7 @@ const Asidedrawer = () => {
             exit={{
               opacity: 0,
             }}
-            transition={{ type: "spring", bounce: 0, duration: 0.2 }}
+            transition={{ type: 'spring', bounce: 0, duration: 0.2 }}
             onClick={() => userSideDrawerVar(!userSideDrawerVar())}
             className="bg-[rgba(0,0,0,0.5)] mt-14 px-5 fixed h-full w-full flex items-center justify-center top-0 left-0  md:hidden"
           />
