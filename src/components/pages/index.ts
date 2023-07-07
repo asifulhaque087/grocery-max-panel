@@ -10,6 +10,10 @@ import { CategoryListPage } from './category/CategoryListPage';
 import { CategoryAddPage } from './category/CategoryAddPage';
 import { CategoryEditPage } from './category/CategoryEditPage';
 
+import { ProductListPage } from './product/ProductListPage';
+import { ProductAddPage } from './product/ProductAddPage';
+import { ProductEditPage } from './product/ProductEditPage';
+
 export {
   HomePage,
   LoginPage,
@@ -17,4 +21,7 @@ export {
   CategoryListPage,
   CategoryAddPage,
   CategoryEditPage,
+  ProductListPage,
+  ProductAddPage,
+  ProductEditPage,
 };
