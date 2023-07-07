@@ -53,15 +53,22 @@ export const CategoryListPage = () => {
       <h1 className="text-center text-gray-500 capitalize my-4 text-xl font-medium">
         list category
       </h1>
-      <div className="px-5">
-        <div className="mx-auto container bg-white dark:bg-gray-800 shadow-none sm:shadow rounded ">
+
+      {/* card */}
+      <div className="p-5">
+        <div
+          className="mx-auto py-5 rounded-md container bg-white  dark:bg-gray-800 shadow-none sm:shadow "
+          style={{
+            boxShadow: `0 4px 18px rgba(47, 43, 61, .1),0 0 transparent,0 0 transparent`,
+          }}
+        >
           <div className="w-full  xl:overflow-x-hidden">
             {queryLoading ? (
               <div>
                 <TableLoading />
               </div>
             ) : (
-              <table className="min-w-full bg-white dark:bg-gray-800 block sm:table">
+              <table className="min-w-full dark:bg-gray-800 block sm:table">
                 <thead className="hidden sm:table-header-group">
                   <tr className="w-full h-16 border-gray-300 dark:border-gray-200 border-b py-8 align-middle text-center">
                     <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
