@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // ============================= GET ALL QUERY =================>
 
@@ -45,14 +45,10 @@ export const GET_PRODUCT_BY_ADMIN = gql`
       discountPrice
       totalSell
       createdAt
-
-      subcategory {
+      category {
         id
         name
-        category {
-          id
-          name
-        }
+        parentId
       }
     }
   }

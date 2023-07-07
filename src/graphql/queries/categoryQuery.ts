@@ -39,6 +39,7 @@ export const GET_CATEGORY = gql`
       id
       name
       photo
+      parentId
       createdAt
     }
   }
