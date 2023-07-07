@@ -5,17 +5,20 @@ import { useState, useEffect } from 'react';
 import { IRecursiveSidebar } from '@src/types/compounds';
 import { IOpenId } from '@src/types/roots/Row';
 import { Tree } from '../roots';
-import { useReactiveVar } from '@apollo/client';
-import { currentParamVarible } from '@src/graphql/reactivities/paramsVariable';
 
-export const RecursiveSidebar = ({ categories }: IRecursiveSidebar) => {
+export const RecursiveSidebar = ({
+  categories,
+  selectParentCategory,
+  currentParam,
+}: IRecursiveSidebar) => {
   const [activeId, setActiveId] = useState('');
   const [openIds, setOpenIds] = useState<IOpenId[]>([]);
 
-  const currentParam = useReactiveVar(currentParamVarible);
-
   const toggleActive = (id: string): void => {
+    const category = categories.find((cat) => cat.id == id);
     setActiveId(id);
+
+    selectParentCategory(category!);
   };
 
   const findPath = (id: string | null, counter: number): number => {
