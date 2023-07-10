@@ -9,5 +9,15 @@ import { ICategory } from './Category';
 import { IOrder } from './Order';
 import { IRow } from './Row';
 import { ITree } from './Tree';
+import { INormalTable } from './tables/NormalTable';
 
-export type { IButton, IBanner, IProduct, ICategory, IOrder, IRow, ITree };
+export type {
+  IButton,
+  IBanner,
+  IProduct,
+  ICategory,
+  IOrder,
+  IRow,
+  ITree,
+  INormalTable,
+};
