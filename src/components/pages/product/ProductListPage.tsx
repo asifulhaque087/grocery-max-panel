@@ -52,7 +52,12 @@ export const ProductListPage = () => {
         product list
       </h1>
       <div className="px-5">
-        <div className="mx-auto container bg-white dark:bg-gray-800 shadow-none sm:shadow rounded ">
+        <div
+          className="mx-auto container bg-white  rounded "
+          style={{
+            boxShadow: `0 4px 18px rgba(47, 43, 61, .1),0 0 transparent,0 0 transparent`,
+          }}
+        >
           <div className="w-full  xl:overflow-x-hidden">
             {queryLoading ? (
               <div>

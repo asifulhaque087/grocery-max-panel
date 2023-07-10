@@ -158,7 +158,12 @@ export const ProductAddPage = () => {
                 }}
               >
                 <div className="grid grid-cols-1 mx-5 gap-4 lg:grid-cols-2  lg:gap-8">
-                  <div className="rounded bg-gray-50 shadow px-5 py-5">
+                  <div
+                    className="rounded   px-5 py-5 bg-white"
+                    style={{
+                      boxShadow: `0 4px 18px rgba(47, 43, 61, .1),0 0 transparent,0 0 transparent`,
+                    }}
+                  >
                     {/* name */}
                     <TextField
                       name="name"
@@ -210,7 +215,12 @@ export const ProductAddPage = () => {
                     />
                   </div>
 
-                  <div className="rounded bg-gray-50 shadow px-5 py-5">
+                  <div
+                    className="rounded  px-5 py-5 bg-white"
+                    style={{
+                      boxShadow: `0 4px 18px rgba(47, 43, 61, .1),0 0 transparent,0 0 transparent`,
+                    }}
+                  >
                     {/* parent*/}
                     <div className="block">
                       <div className="my-3">
