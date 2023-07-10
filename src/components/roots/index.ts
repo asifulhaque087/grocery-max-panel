@@ -10,6 +10,7 @@ import { AuthTextField } from './AuthTextField';
 import { TextField } from './TextField';
 import { Row } from './Row';
 import { Tree } from './Tree';
+import { NormalTable } from './tables/NormalTable';
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   Row,
   Tree,
   AuthTextField,
+  NormalTable,
 };
