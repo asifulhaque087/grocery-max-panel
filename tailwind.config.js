@@ -19,6 +19,10 @@ module.exports = {
       colors: {
         primary: '#fd7070',
       },
+      boxShadow: {
+        custom:
+          '0 4px 18px rgba(47, 43, 61, .1),0 0 transparent,0 0 transparent',
+      },
     },
   },
   plugins: [],
