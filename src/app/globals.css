@@ -31,13 +31,11 @@
     /* background-color: red; */
     display: flex;
     align-items: center;
-    font-weight: bold;
+    font-weight: medium;
     text-align: left;
+    font-size: 12px;
   }
 }
-
-
-
 
 /* :root {
   --foreground-rgb: 0, 0, 0;
