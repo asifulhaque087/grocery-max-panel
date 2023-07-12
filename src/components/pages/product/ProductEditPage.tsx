@@ -51,7 +51,7 @@ export const ProductEditPage = ({ productId }) => {
   useEffect(() => {
     if (categories && product) {
       const goal = categories.find(
-        (box: any) => box.category.id == product.category.id
+        (box: any) => box.category.id == product?.category?.id
       );
       if (goal) selectParentCategory(goal.category);
     }
@@ -113,14 +113,18 @@ export const ProductEditPage = ({ productId }) => {
           }}
           onSubmit={async (values, actions) => {
             const response = await updateProduct({
-              variables: { ...values, photo: values.photos[0] || '' },
+              variables: {
+                ...values,
+                photo: values.photos[0] || '',
+                category: parentCat.id,
+              },
               update: (_, { data: { updateProduct: newData } }) => {
                 if (newData?.product) {
                   setState({
                     ...state,
                     serverMessage: 'Proudct Edited Successfully',
                   });
-                  router.push('/admin/product');
+                  router.push('/product');
                 }
               },
             });
@@ -227,7 +231,7 @@ export const ProductEditPage = ({ productId }) => {
 
                     <div>
                       <RecursiveSidebar
-                        currentParam={product.category.id}
+                        currentParam={product?.category?.id}
                         selectParentCategory={selectParentCategory}
                         // outerParent={outerParent}
                         categories={categories.map(({ category }) => category)}
