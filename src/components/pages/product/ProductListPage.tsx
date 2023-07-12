@@ -8,6 +8,7 @@ import { storeIdVar } from '../../../graphql/reactivities/storeIdVariable';
 import { GET_PRODUCTS_BY_ADMIN } from '../../../graphql/queries/productQuery';
 import { DELETE_PRODUCT } from '../../../graphql/mutations/productMutation';
 import { TableLoading } from '@src/components/compounds';
+import { NormalTable } from '@src/components/roots';
 
 export const ProductListPage = () => {
   const storeId = useReactiveVar(storeIdVar);
@@ -18,6 +19,72 @@ export const ProductListPage = () => {
   // product deleting
   const [deleteProduct, { loading: mutationLoading }] =
     useMutation(DELETE_PRODUCT);
+
+  console.log(products);
+
+  const columns = [
+    {
+      name: 'Name',
+      selector: (row: any) => row.name,
+    },
+
+    {
+      name: 'Category',
+      selector: (row: any) => row?.category?.name,
+    },
+
+    {
+      name: 'Photo',
+      selector: (row: any) => (
+        <img
+          alt="product"
+          src={row.photo}
+          className="w-[30px] ml-auto md:ml-0"
+        />
+      ),
+    },
+
+    {
+      name: 'Date',
+      selector: (row: any) =>
+        moment.unix(row.createdAt).subtract(10, 'days').calendar(),
+    },
+
+    {
+      name: 'Action',
+      selector: (row: any) => (
+        <div>
+          <button
+            className="mr-2"
+            onClick={async () => {
+              if (window.confirm('Are you sure ?') == true) {
+                storeIdVar(row.id);
+                await deleteProduct({
+                  variables: { id: row.id },
+                  update: (proxy) => {
+                    proxy.evict({
+                      id: `Product:${row.id}`,
+                    });
+                  },
+                });
+              }
+            }}
+          >
+            <TrashIcon
+              className={`h-5 text-red-500 ${
+                mutationLoading && row.id == storeId && 'animate-spin'
+              }`}
+            />
+          </button>
+          <Link href={`/product/edit/${row.id}`}>
+            <button className="ml-2">
+              <PencilIcon className="h-5 text-yellow-500" />
+            </button>
+          </Link>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -51,129 +118,18 @@ export const ProductListPage = () => {
       <h1 className="text-center text-gray-500 capitalize my-4 text-xl font-medium">
         product list
       </h1>
-      <div className="px-5">
-        <div
-          className="mx-auto container bg-white  rounded "
-          style={{
-            boxShadow: `0 4px 18px rgba(47, 43, 61, .1),0 0 transparent,0 0 transparent`,
-          }}
-        >
-          <div className="w-full  xl:overflow-x-hidden">
-            {queryLoading ? (
-              <div>
-                <TableLoading />
-              </div>
-            ) : (
-              <table className="min-w-full bg-white dark:bg-gray-800 block sm:table">
-                <thead className="hidden sm:table-header-group">
-                  <tr className="w-full h-16 border-gray-300 dark:border-gray-200 border-b py-8 align-middle text-center">
-                    {/* col name */}
-                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                      Name
-                    </th>
-                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                      Image
-                    </th>
-                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                      Category
-                    </th>
-                    <th className="text-gray-600 dark:text-gray-400  pr-6  text-sm tracking-normal leading-4 font-medium">
-                      Date
-                    </th>
-                    <td className="text-gray-600 dark:text-gray-400  pr-8  text-sm tracking-normal leading-4 font-medium">
-                      Action
-                    </td>
-                  </tr>
-                </thead>
-
-                <tbody className="block sm:table-row-group">
-                  {products &&
-                    products.map(({ product }) => (
-                      <tr
-                        key={product.id}
-                        className="h-auto sm:h-24 border-gray-300 dark:border-gray-200 
-                        border  sm:border-0 sm:border-b  align-middle text-center block sm:table-row my-10 sm:my-0"
-                      >
-                        {/* col value */}
-                        <td
-                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
-                          data-label="Name"
-                        >
-                          {product.name}
-                        </td>
-
-                        <td
-                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell text-right sm:text-right relative py-10 sm:py-0 border-b sm:border-b-0"
-                          data-label="Image"
-                        >
-                          <img
-                            src={`${product.photo}`}
-                            alt="product"
-                            className="w-16  overflow-hidden shadow block ml-auto md:m-auto"
-                          />
-                        </td>
-
-                        <td
-                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
-                          data-label="Category"
-                        >
-                          {product.category && `${product.category.name}`}
-                        </td>
-
-                        <td
-                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
-                        text-right sm:text-center relative    py-10 sm:py-0 border-b sm:border-b-0"
-                          data-label="Date"
-                        >
-                          {/* { new Date( product. createdAt) } */}
-                          {moment
-                            .unix(product.createdAt)
-                            .subtract(10, 'days')
-                            .calendar()}
-                        </td>
-
-                        <td
-                          className="text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 block sm:table-cell
-                        text-right sm:text-center relative py-10 sm:py-0 border-b sm:border-b-0"
-                          data-label="Action"
-                        >
-                          <button
-                            className="mr-2"
-                            onClick={async () => {
-                              if (window.confirm('Are you sure ?') == true) {
-                                storeIdVar(product.id);
-                                await deleteProduct({
-                                  variables: { id: product.id },
-                                  update: (proxy) => {
-                                    proxy.evict({
-                                      id: `Product:${product.id}`,
-                                    });
-                                  },
-                                });
-                              }
-                            }}
-                          >
-                            <TrashIcon
-                              className={`h-5 text-red-500 ${
-                                mutationLoading &&
-                                product.id == storeId &&
-                                'animate-spin'
-                              }`}
-                            />
-                          </button>
-                          <Link href={`/product/edit/${product.id}`}>
-                            <button className="ml-2">
-                              <PencilIcon className="h-5 text-yellow-500" />
-                            </button>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            )}
+      {/* card */}
+      <div className="p-5">
+        {queryLoading ? (
+          <div>
+            <TableLoading />
           </div>
-        </div>
+        ) : (
+          <NormalTable
+            columns={columns}
+            tableData={products.map((item: any) => item.product)}
+          />
+        )}
       </div>
     </>
   );
