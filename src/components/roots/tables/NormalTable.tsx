@@ -1,9 +1,11 @@
+"use client"
+
 import { INormalTable } from '@src/types/roots';
 
 export const NormalTable = ({ columns, tableData }: INormalTable) => {
   return (
     <div>
-      <table className="border-collapse text-[14px] rounded-t-[5px] overflow-hidden w-full shadow-none sm:shadow-custom block px-[20px] sm:table sm:px-0">
+      <table className="border-collapse text-[14px] rounded-t-[5px] overflow-hidden w-full block px-[20px] sm:table sm:px-0 bg-white">
         <thead className="hidden sm:table-header-group">
           <tr className="text-left  bg-indigo-500 text-white font-[700]">
             {columns.map((column) => (
