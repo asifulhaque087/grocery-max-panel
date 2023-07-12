@@ -98,7 +98,7 @@ export const ProductAddPage = () => {
               variables: {
                 ...values,
                 photo: values.photos[0] || '',
-                category: parentCat.id,
+                category: parentCat.id ? parentCat.id : null,
               },
               update: (proxy, { data: { createProduct: newData } }) => {
                 const data: any = proxy.readQuery({
