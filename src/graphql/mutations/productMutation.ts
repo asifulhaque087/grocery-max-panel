@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // ============================= CREATE  MUTATION =================>
 export const CREATE_PRODUCT = gql`
@@ -76,7 +76,7 @@ export const UPDATE_PRODUCT = gql`
     $unit: String
     $price: String
     $discountPrice: String
-    $subcategory: ID
+    $category: ID
   ) {
     updateProduct(
       input: {
@@ -89,7 +89,7 @@ export const UPDATE_PRODUCT = gql`
         unit: $unit
         price: $price
         discountPrice: $discountPrice
-        subcategory: $subcategory
+        category: $category
       }
     ) {
       errors {
@@ -108,14 +108,9 @@ export const UPDATE_PRODUCT = gql`
         discountPrice
         totalSell
         createdAt
-
-        subcategory {
+        category {
           id
           name
-          category {
-            id
-            name
-          }
         }
       }
     }

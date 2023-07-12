@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // ============================= CREATE CATEGORY MUTATION =================>
 export const CREATE_CATEGORY = gql`
-  mutation createCategory($photo: String!, $name: String!, $parentId: ID!) {
+  mutation createCategory($photo: String!, $name: String!, $parentId: ID) {
     createCategory(input: { photo: $photo, name: $name, parentId: $parentId }) {
       errors {
         field
@@ -34,8 +34,15 @@ export const DELETE_CATEGORY = gql`
 `;
 // ============================= UPDATE CATEGORY MUTATION =================>
 export const UPDATE_CATEGORY = gql`
-  mutation updateCategory($id: ID!, $name: String!, $photo: String!) {
-    updateCategory(input: { id: $id, name: $name, photo: $photo }) {
+  mutation updateCategory(
+    $id: ID!
+    $name: String!
+    $photo: String!
+    $parentId: ID!
+  ) {
+    updateCategory(
+      input: { id: $id, name: $name, photo: $photo, parentId: $parentId }
+    ) {
       errors {
         field
         message
