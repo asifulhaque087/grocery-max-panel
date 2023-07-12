@@ -101,7 +101,7 @@ export const CategoryAddPage = () => {
               variables: {
                 ...values,
                 photo: values.photos[0] || '',
-                parentId: parentCat.id,
+                parentId: parentCat.id ? parentCat.id : null,
               },
               update: (proxy, { data: { createCategory: newCategory } }) => {
                 const data: any = proxy.readQuery({
