@@ -114,6 +114,7 @@ export const CategoryEditPage = ({ categoryId }) => {
                 ...values,
                 id: categoryId,
                 photo: values.photos[0] || '',
+                parentId: parentCat.id,
               },
               update: (_, { data: { updateCategory: newCategory } }) => {
                 if (newCategory?.category) {
