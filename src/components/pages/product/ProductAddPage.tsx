@@ -244,22 +244,38 @@ export const ProductAddPage = () => {
                       />
                     </div>
 
+                    <div className={``}>
+                      <TextField
+                        onChange={async (
+                          e: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          setFieldValue('photos', [e.target.value]);
+                        }}
+                        name="photos"
+                        type="text"
+                        placeholder="Upload by link"
+                        label="Photo by link"
+                      />
+                    </div>
+
                     {/* photo */}
-                    <TextField
-                      onChange={async (
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        let files = await convertToBase64(e.target.files);
-                        setFieldValue('photos', files);
-                      }}
-                      name="photos"
-                      multiple
-                      type="file"
-                      placeholder="Photo"
-                      label="Photo"
-                      // value={undefined}
-                      value=""
-                    />
+                    <div className={``}>
+                      <TextField
+                        onChange={async (
+                          e: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          let files = await convertToBase64(e.target.files);
+                          setFieldValue('photos', files);
+                        }}
+                        name="photos"
+                        multiple
+                        type="file"
+                        placeholder="Photo"
+                        label="Uload Local Photo"
+                        // value={undefined}
+                        value=""
+                      />
+                    </div>
                     {values.photos &&
                       values.photos.map((photo, i) => (
                         <div key={i}>
