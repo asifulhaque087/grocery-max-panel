@@ -1,9 +1,8 @@
-import { PlaceOrderPage } from '@src/components/pages';
 
 const page = () => {
   return (
     <div>
-      <PlaceOrderPage />
+    this is page order page
     </div>
   );
 };

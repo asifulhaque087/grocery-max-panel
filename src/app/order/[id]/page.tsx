@@ -1,27 +1,27 @@
-import { OrderIdPage } from '@src/components/pages';
-import { FullPageLoading } from '@src/components/roots';
-import client from '@src/graphql/client';
-import { GET_ORDER } from '@src/graphql/queries/orderQuery';
+// import { FullPageLoading } from '@src/components/roots';
+// import client from '@src/graphql/client';
+// import { GET_ORDER } from '@src/graphql/queries/orderQuery';
 
 export const dynamic = 'force-dynamic';
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const { loading: loading, data: { getOrder: order } = {} } =
-    await client.query({
-      query: GET_ORDER,
-      variables: { id: params.id },
-      fetchPolicy: 'network-only',
-    });
+  // const { loading: loading, data: { getOrder: order } = {} } =
+  //   await client.query({
+  //     query: GET_ORDER,
+  //     variables: { id: params.id },
+  //     fetchPolicy: 'network-only',
+  //   });
 
-  if (loading) {
-    return <FullPageLoading />;
-  }
+  // if (loading) {
+  //   return <FullPageLoading />;
+  // }
 
-  console.log('we are from here ', order);
+  // console.log('we are from here ', order);
 
   return (
     <div>
-      <OrderIdPage order={order} orderId={params.id} />
+      {/* <OrderIdPage order={order} orderId={params.id} /> */}
+      this is order page
     </div>
   );
 };
