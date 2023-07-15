@@ -1,9 +1,10 @@
-import { RegisterPage } from '@src/components/pages';
+// import { RegisterPage } from '@src/components/pages';
 
 const page = () => {
   return (
     <div>
-      <RegisterPage />
+      {/* <RegisterPage /> */}
+      this is register page
     </div>
   );
 };
