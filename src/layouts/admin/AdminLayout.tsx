@@ -5,10 +5,10 @@ import React from 'react';
 import { userSideDrawerVar } from '../../graphql/reactivities/toogleVariable';
 import Asidedrawer from './Asidedrawer';
 import Atopbar from './Atopbar';
-import { adminAuth } from '@src/hooks';
+import { useAuth } from '@src/hooks';
 
 const AdminLayout = (props) => {
-  const isAuthenticated = adminAuth();
+  const isAuthenticated = useAuth();
   const userSideDrawer = useReactiveVar(userSideDrawerVar);
 
   if (!isAuthenticated) return null;
