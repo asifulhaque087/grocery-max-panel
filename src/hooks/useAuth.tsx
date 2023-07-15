@@ -15,7 +15,7 @@ export const useAuth = () => {
 
     if (token) {
       let decript = jwtDecode(token) as any;
-      if (decript.role === 'buyer') {
+      if (decript.role === 'admin') {
         setIsAuthenticated(true);
       } else {
         Router.replace('/login');
