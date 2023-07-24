@@ -65,11 +65,14 @@ export const Pagination = (props: IPagination) => {
         return (
           <li
             key={i}
-            className={`box-border flex items-center justify-center  rounded-full cursor-pointer  text-[13px] leading-[20px] tracking-[1px] hover:bg-[#317AF5] hover:text-white ${
-              pageNumber === currentPage
-                ? 'text-[18px] font-[600] leading-[27px] h-[35px] w-[35px] bg-[#317AF5] text-white'
-                : 'h-[25px] w-[25px]  text-black bg-white '
-            }`}
+            className={`box-border flex items-center justify-center  rounded-[5px] cursor-pointer  text-[13px] leading-[20px] tracking-[1px] 
+            hover:bg-[#7367f0] hover:text-white
+             ${
+               pageNumber === currentPage
+                 ? 'text-[16px] font-[600] leading-[27px] h-[30px] w-[30px] bg-[#7367f0] text-white'
+                 : 'h-[25px] w-[25px]  text-black bg-white '
+             }
+            `}
             onClick={() => onPageChange(pageNumber)}
           >
             {pageNumber}
