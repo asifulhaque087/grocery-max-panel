@@ -10,6 +10,7 @@ import { IOrder } from './Order';
 import { IRow } from './Row';
 import { ITree } from './Tree';
 import { INormalTable } from './tables/NormalTable';
+import { IPagination } from './Pagination';
 
 export type {
   IButton,
@@ -20,4 +21,5 @@ export type {
   IRow,
   ITree,
   INormalTable,
+  IPagination,
 };
