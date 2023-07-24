@@ -11,6 +11,7 @@ import { TextField } from './TextField';
 import { Row } from './Row';
 import { Tree } from './Tree';
 import { NormalTable } from './tables/NormalTable';
+import { Pagination } from './Pagination';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   Tree,
   AuthTextField,
   NormalTable,
+  Pagination,
 };
