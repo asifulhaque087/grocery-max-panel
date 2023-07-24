@@ -56,13 +56,64 @@ const tableData = [
     id: 1,
     name: 'John Doe',
     photo:
-      'https://res.cloudinary.com/dkrc4r7lr/image/upload/v1688594538/grocery-max/wjmmoty1mvqtbw902juf.jpg',
+      'https://chaldn.com/_mpimage/soft-drinks?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D27882&q=best&v=1&m=400&webp=1',
   },
   {
     id: 2,
     name: 'Jane Smith',
     photo:
-      'https://res.cloudinary.com/dkrc4r7lr/image/upload/v1688105668/grocery-max/fhzxcd5yxayzfazuhnbu.jpg',
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+
+  {
+    id: 3,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+
+  {
+    id: 4,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+
+  {
+    id: 5,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+  {
+    id: 6,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+  {
+    id: 7,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+  {
+    id: 8,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+  {
+    id: 9,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
+  },
+  {
+    id: 10,
+    name: 'Jane Smith',
+    photo:
+      'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
   },
   // Add more rows as needed
 ];

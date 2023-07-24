@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useMemo, useState } from 'react';
 import { INormalTable } from '@src/types/roots';
 import { BiPlus } from 'react-icons/bi';
 import Select, {
@@ -7,6 +8,7 @@ import Select, {
   StylesConfig,
   components,
 } from 'react-select';
+import { Pagination } from '../Pagination';
 
 const colourStyles: StylesConfig = {
   control: (styles, state) => {
@@ -66,6 +68,15 @@ const colourStyles: StylesConfig = {
 };
 
 export const NormalTable = ({ columns, tableData }: INormalTable) => {
+  let PageSize = 2;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return tableData.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
+
   const options = [
     { value: 'chocolate', label: 10 },
     { value: 'strawberry', label: 20 },
@@ -77,8 +88,9 @@ export const NormalTable = ({ columns, tableData }: INormalTable) => {
   };
 
   return (
-    <div className="rounded-[5px] bg-red-5000">
-      <div className="py-[50px] px-[30px] flex items-center rounded-[5px]">
+    <div className="shadow-custom py-[30px] border rounded-[6px]">
+      {/* header */}
+      <div className="flex items-center  rounded-[5px] px-[30px]">
         {/* input row number */}
         <div className="w-[100px]">
           <Select
@@ -127,7 +139,58 @@ export const NormalTable = ({ columns, tableData }: INormalTable) => {
           />
         </div>
       </div>
-      <table className="border-collapse text-[14px] rounded-t-[5px] overflow-hidden w-full block px-[20px] sm:table sm:px-0 bg-white">
+
+      <hr className="border-t mt-[30px]" />
+
+      {/* table */}
+      <div className="overflow-x-auto py-[10px]">
+        <div className="table w-full border-collapse">
+          {/* table header */}
+          <div className="table-header-group text-[#24334A] text-[16px] font-[600]">
+            <div className="table-row border-b">
+              {columns.map((column) => (
+                <div
+                  className="table-cell align-middle  py-[30px] px-[15px]"
+                  key={column.name}
+                >
+                  {column.name}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* rows */}
+          <div className="table-row-group">
+            {currentTableData.map((row: any, i: number) => (
+              <React.Fragment key={i}>
+                <div className="table-row text-[12px] border-t border-b  text-[#292D32]">
+                  {columns.map((column, columnIndex) => (
+                    <div
+                      className="table-cell align-middle py-[12px] px-[15px]"
+                      key={columnIndex}
+                      data-label={column.name}
+                    >
+                      {column.selector(row)}
+                    </div>
+                  ))}
+                </div>
+                {/* <div> this is the details page</div> */}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* footer */}
+      <div className="flex items-start px-[30px] mt-[30px]">
+        <Pagination
+          currentPage={currentPage}
+          totalCount={tableData.length}
+          pageSize={PageSize}
+          onPageChange={(page: any) => setCurrentPage(page)}
+        />
+      </div>
+
+      {/* <table className="border-collapse text-[14px] rounded-t-[5px] overflow-hidden w-full block px-[20px] sm:table sm:px-0 bg-white">
         <thead className="hidden sm:table-header-group">
           <tr className="text-left  bg-indigo-500 text-white font-[700]">
             {columns.map((column) => (
@@ -155,7 +218,7 @@ export const NormalTable = ({ columns, tableData }: INormalTable) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };
