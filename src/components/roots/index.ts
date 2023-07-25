@@ -12,6 +12,7 @@ import { Row } from './Row';
 import { Tree } from './Tree';
 import { NormalTable } from './tables/NormalTable';
 import { Pagination } from './Pagination';
+import { Tab } from './form/Tab';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   AuthTextField,
   NormalTable,
   Pagination,
+  Tab,
 };
