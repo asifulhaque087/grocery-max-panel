@@ -7,6 +7,7 @@ import { IMainSlider } from './MainSlider';
 import { ICategoryList } from './CategoryList';
 import { IProductList } from './ProductList';
 import { IRecursiveSidebar } from './RecursiveSidebar';
+import { IProductInformation } from './form/ProductInformation';
 
 export type {
   IBannerSlider,
@@ -14,4 +15,5 @@ export type {
   ICategoryList,
   IProductList,
   IRecursiveSidebar,
+  IProductInformation,
 };
