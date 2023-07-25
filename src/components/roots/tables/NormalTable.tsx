@@ -9,6 +9,7 @@ import Select, {
   components,
 } from 'react-select';
 import { Pagination } from '../Pagination';
+import { useIsBrowser } from '@src/hooks';
 
 const colourStyles: StylesConfig = {
   control: (styles, state) => {
@@ -68,9 +69,11 @@ const colourStyles: StylesConfig = {
 };
 
 export const NormalTable = ({ columns, tableData }: INormalTable) => {
-  let PageSize = 2;
+  const isBroswer = useIsBrowser();
+
   const [currentPage, setCurrentPage] = useState(1);
 
+  let PageSize = 2;
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
@@ -86,6 +89,8 @@ export const NormalTable = ({ columns, tableData }: INormalTable) => {
   const handleSelectChange = (selectedOption: any) => {
     console.log(selectedOption.value);
   };
+
+  if (!isBroswer) return null;
 
   return (
     <div className="shadow-custom py-[30px] border rounded-[6px]">
@@ -126,18 +131,17 @@ export const NormalTable = ({ columns, tableData }: INormalTable) => {
         </div>
 
         {/* select status */}
-        <div className="ml-[12px] w-[192px]">
+        {/* <div className="ml-[12px] w-[192px]">
           <Select
             onChange={handleSelectChange}
             placeholder="Select Status"
             options={options}
-            // defaultValue={options[0]}
             styles={colourStyles}
             components={{
               IndicatorSeparator: () => null,
             }}
           />
-        </div>
+        </div> */}
       </div>
 
       <hr className="border-t mt-[30px]" />
@@ -163,7 +167,7 @@ export const NormalTable = ({ columns, tableData }: INormalTable) => {
           <div className="table-row-group">
             {currentTableData.map((row: any, i: number) => (
               <React.Fragment key={i}>
-                <div className="table-row text-[12px] border-t border-b  text-[#292D32]">
+                <div className="table-row text-[13px] border-t border-b  text-[#292D32]">
                   {columns.map((column, columnIndex) => (
                     <div
                       className="table-cell align-middle py-[12px] px-[15px]"
