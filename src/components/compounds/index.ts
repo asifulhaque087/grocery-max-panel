@@ -4,5 +4,6 @@
 
 import { RecursiveSidebar } from './RecursiveSidebar';
 import { TableLoading } from './loading/TableLoading';
+import { ProductInformation } from './form/ProductInformation';
 
-export { RecursiveSidebar, TableLoading };
+export { RecursiveSidebar, TableLoading, ProductInformation };
