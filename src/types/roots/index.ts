@@ -11,6 +11,7 @@ import { IRow } from './Row';
 import { ITree } from './Tree';
 import { INormalTable } from './tables/NormalTable';
 import { IPagination } from './Pagination';
+import { ITab } from './form/Tab';
 
 export type {
   IButton,
@@ -22,4 +23,5 @@ export type {
   ITree,
   INormalTable,
   IPagination,
+  ITab,
 };
