@@ -8,13 +8,13 @@ import Atopbar from './Atopbar';
 import { useAuth } from '@src/hooks';
 
 const AdminLayout = (props) => {
-  const isAuthenticated = useAuth();
+  // const isAuthenticated = useAuth();
   const userSideDrawer = useReactiveVar(userSideDrawerVar);
 
-  if (!isAuthenticated) return null;
+  // if (!isAuthenticated) return null;
   return (
     <div>
-      <Atopbar />
+      {/* <Atopbar /> */}
       <div className={`${userSideDrawer ? 'ml-0 md:ml-64' : 'ml-0 md:ml-0'} `}>
         <Asidedrawer {...props} />
         <div className="bg-[rgb(248,247,250)]">{props.children}</div>
