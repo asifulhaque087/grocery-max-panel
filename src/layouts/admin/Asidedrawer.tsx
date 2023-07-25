@@ -91,6 +91,11 @@ const Asidedrawer = () => {
           name: 'list product',
           to: '/product',
         },
+
+        {
+          name: 'Attributes',
+          to: '/attributes',
+        },
       ],
       open: false,
     },
@@ -154,7 +159,7 @@ const Asidedrawer = () => {
               x: '-100%',
             }}
             variants={BigSreen}
-            className={`mt-14 fixed inset-y-0 left-0 z-10`}
+            className={`mtt-14 fixed inset-y-0 left-0 z-10`}
             style={{
               boxShadow: `0 2px 6px rgba(47, 43, 61, .14),0 0 transparent,0 0 transparent`,
             }}
