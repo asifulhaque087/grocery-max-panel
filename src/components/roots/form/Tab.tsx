@@ -2,7 +2,7 @@ import { ITab } from '@src/types/roots';
 
 export const Tab = ({ tabs, activeIndex, setActiveIndex }: ITab) => {
   return (
-    <div className="w-full flex items-center gap-[20px] bg-white py-[20px] px-[30px]  rounded-[6px] shadow-custom">
+    <div className="w-full flex items-center gap-[20px] bg-white py-[20px] px-[30px]  rounded-[6px] border shadow-custom">
       {tabs.map((tab, i) => (
         <span
           key={i}

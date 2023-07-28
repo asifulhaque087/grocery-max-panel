@@ -13,6 +13,7 @@ import { Tree } from './Tree';
 import { NormalTable } from './tables/NormalTable';
 import { Pagination } from './Pagination';
 import { Tab } from './form/Tab';
+import { Editor } from './Editor';
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   NormalTable,
   Pagination,
   Tab,
+  Editor,
 };
