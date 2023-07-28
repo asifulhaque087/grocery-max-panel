@@ -5,5 +5,13 @@
 import { RecursiveSidebar } from './RecursiveSidebar';
 import { TableLoading } from './loading/TableLoading';
 import { ProductInformation } from './form/ProductInformation';
+import { ProductAttribute } from './form/ProductAttribute';
+import { ProductValues } from './form/ProductValues';
 
-export { RecursiveSidebar, TableLoading, ProductInformation };
+export {
+  RecursiveSidebar,
+  TableLoading,
+  ProductInformation,
+  ProductAttribute,
+  ProductValues,
+};
