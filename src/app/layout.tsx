@@ -1,11 +1,11 @@
 'use client';
 
 import './globals.css';
-import { Inter, Public_Sans } from 'next/font/google';
+import { Public_Sans } from 'next/font/google';
 import { ApolloProvider } from '@apollo/client';
 import client from '@src/graphql/client';
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
 const publicSans = Public_Sans({ subsets: ['latin'] });
 
 // export const metadata = {
