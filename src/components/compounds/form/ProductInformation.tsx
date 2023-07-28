@@ -1,12 +1,11 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Editor } from '@src/components/roots';
 import { IProductInformation } from '@src/types/compounds';
 
 export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
   return (
     <div className="flex flex-col sm:flex-row items-start justify-center gap-[20px] my-[20px]  bg-[rgb(248,247,250)]">
       {/* top */}
-      <div className="w-full rounded-[10px] bg-white shadow-custom">
+      <div className="w-full rounded-[10px] bg-white shadow-custom border">
         <h4 className="text-[16px] font-[500] text-[#24334A] capitalize py-[12px] px-[25px] border-b">
           product informations
         </h4>
@@ -29,7 +28,6 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
           </div>
 
           {/* description */}
-
           <div className="mt-[15px] flex flex-col gap-y-[5px]">
             <label
               htmlFor="description"
@@ -38,33 +36,7 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
               product Description
             </label>
             <div>
-              <CKEditor
-                editor={ClassicEditor}
-                // data="<p>Hello from CKEditor 5!</p>"
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  // console.log('Editor is ready to use!', editor);
-
-                  editor.editing.view.change((writer) => {
-                    writer.setStyle(
-                      //use max-height(for scroll) or min-height(static)
-                      'min-height',
-                      '180px',
-                      editor.editing.view.document.getRoot()!
-                    );
-                  });
-                }}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  console.log({ event, editor, data });
-                }}
-                onBlur={(event, editor) => {
-                  console.log('Blur.', editor);
-                }}
-                onFocus={(event, editor) => {
-                  console.log('Focus.', editor);
-                }}
-              />
+              <Editor />
             </div>
           </div>
 
