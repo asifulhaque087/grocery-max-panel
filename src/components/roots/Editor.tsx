@@ -1,10 +1,28 @@
+'use client';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useEffect } from 'react';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
-export const Editor = () => {
+interface IEditor<T extends string> {
+  field: ControllerRenderProps<FieldValues, T>;
+}
+
+export const Editor = <T extends string>({ field }: IEditor<T>) => {
+  // useEffect(() => {
+  //   // register('input')
+  // });
+
   return (
     <div>
       <CKEditor
+        data={field.value}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          field.onChange(data);
+        }}
+        // {...field}
+        // onChange={(value) => setValue('input', value)}
         editor={ClassicEditor}
         // data="<p>Hello from CKEditor 5!</p>"
         onReady={(editor) => {
@@ -20,16 +38,16 @@ export const Editor = () => {
             );
           });
         }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          console.log({ event, editor, data });
-        }}
-        onBlur={(event, editor) => {
-          console.log('Blur.', editor);
-        }}
-        onFocus={(event, editor) => {
-          console.log('Focus.', editor);
-        }}
+        // onChange={(event, editor) => {
+        //   const data = editor.getData();
+        //   console.log({ event, editor, data });
+        // }}
+        // onBlur={(event, editor) => {
+        //   console.log('Blur.', editor);
+        // }}
+        // onFocus={(event, editor) => {
+        //   console.log('Focus.', editor);
+        // }}
       />
     </div>
   );
