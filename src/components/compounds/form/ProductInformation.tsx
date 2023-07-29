@@ -1,7 +1,86 @@
+'use client';
+import { useState } from 'react';
+
 import { Editor } from '@src/components/roots';
 import { IProductInformation } from '@src/types/compounds';
+import { LabelInput } from './LabelInput';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { storeSingleProduct } from '@src/graphql/reactivities/productVariable';
+import { useMutation } from '@apollo/client';
+import { CREATE_PRODUCT } from '@src/graphql/mutations/productMutation';
 
 export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  // create product
+  const [createProduct] = useMutation(CREATE_PRODUCT);
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: '',
+      slug: '',
+      description: '',
+    },
+  });
+
+  const onFormSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log('data is ', data);
+    // storeSingleProduct(data);
+
+    const response = await createProduct({
+      variables: {
+        ...data,
+        // category: parentCat.id ? parentCat.id : null,
+      },
+      update: (proxy, { data: { createProduct: newData } }) => {
+        // const data: any = proxy.readQuery({
+        //   query: GET_PRODUCTS_BY_ADMIN,
+        // });
+
+        console.log('newData is ', newData);
+
+        if (newData) {
+          storeSingleProduct(newData);
+          setActiveIndex(1);
+          // if (data) {
+          //   proxy.writeQuery({
+          //     query: GET_PRODUCTS_BY_ADMIN,
+          //     data: {
+          //       getProductsByAdmin: [newData, ...data.getProductsByAdmin],
+          //     },
+          //   });
+          // }
+          // setState({
+          //   ...state,
+          //   serverMessage: 'Product added successfully',
+          // });
+          // router.push('/product');
+        }
+      },
+    });
+
+    // if (response.data?.createProduct.errors) {
+    //   let errorsMap: any = toErrorMap(response.data?.createProduct.errors);
+    //   if (errorsMap.hasOwnProperty('error')) {
+    //     setState({
+    //       ...state,
+    //       error: errorsMap.error,
+    //     });
+    //   }
+    //   actions.setErrors(errorsMap);
+    // }
+  };
+
   return (
     <div className="flex flex-col sm:flex-row items-start justify-center gap-[20px] my-[20px]  bg-[rgb(248,247,250)]">
       {/* top */}
@@ -10,25 +89,32 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
           product informations
         </h4>
 
-        <div className="p-[24px]">
+        <form
+          className="p-[24px] flex flex-col gap-y-[15px]"
+          onSubmit={handleSubmit(onFormSubmit)}
+        >
           {/* name */}
-          <div className="flex flex-col gap-y-[5px]">
-            <label
-              htmlFor="name"
-              className="text-[13px] text-[#292D32] capitalize"
-            >
-              product Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              // placeholder="search invoice"
-              className="w-full outline-none text-[rgba(47,43,61,0.68)] placeholder:text-[rgba(47,43,61,0.48)] placeholder:capitalize border rounded-[6px] px-[16px] py-[8px] focus:shadow-[0px_2px_4px_rgba(47,43,61,.12)] focus:border-[#7367f0] focus:placeholder:pl-[10px] focus:transition-all focus:placeholder:transition-all placeholder:transition-all transition-all"
-            />
-          </div>
+          <LabelInput
+            id="name"
+            label="Product Name"
+            required={true}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
+
+          {/* slug */}
+          <LabelInput
+            id="slug"
+            label="Product Slug"
+            required={true}
+            disabled={isLoading}
+            register={register}
+            errors={errors}
+          />
 
           {/* description */}
-          <div className="mt-[15px] flex flex-col gap-y-[5px]">
+          <div className="flex flex-col gap-y-[5px]">
             <label
               htmlFor="description"
               className="text-[13px] text-[#292D32] capitalize"
@@ -36,19 +122,25 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
               product Description
             </label>
             <div>
-              <Editor />
+              <Controller
+                name="description"
+                control={control}
+                defaultValue=""
+                render={({ field }) => <Editor field={field} />}
+              />
             </div>
           </div>
 
           <button
+            type="submit"
             className="outline-none border-0 px-[16px] py-[8px] rounded-[6px] bg-[#7367f0]  shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent] mt-[15px]"
-            onClick={() => setActiveIndex(1)}
+            // onClick={() => setActiveIndex(1)}
           >
             <span className="text-[15px] font-[500] text-white capitalize">
-              Next
+              next
             </span>
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
