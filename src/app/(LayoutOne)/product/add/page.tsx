@@ -8,6 +8,27 @@ import {
   ProductAttribute,
   ProductInformation,
 } from '@src/components/compounds';
+import client from '@src/graphql/client';
+import { gql, useQuery } from '@apollo/client';
+
+export const dynamic = 'force-dynamic';
+
+// async function fetchData() {
+//   const { loading, data: { attributes } = {} } = await client.query({
+//     query: gql`
+//       {
+//         attributes {
+//           id
+//           name
+//         }
+//       }
+//     `,
+//   });
+
+//   return attributes;
+// }
+
+// const dataPromise = fetchData();
 
 const page = () => {
   // return (
@@ -15,6 +36,7 @@ const page = () => {
   //     <ProductAddPage />
   //   </div>
   // );
+
 
   const [activeTab, setActiveTab] = useState(0);
 
