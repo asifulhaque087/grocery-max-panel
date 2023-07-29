@@ -4,48 +4,25 @@ import { gql } from '@apollo/client';
 export const CREATE_PRODUCT = gql`
   mutation createProduct(
     $name: String!
-    $photo: String!
+    $slug: String!
     $description: String
-    $price: String
-    $discountPrice: String
-    $qty: String
-    $unit: String
-    $stock: String
-    $category: ID
+    $category: Int
   ) {
     createProduct(
-      input: {
+      createProductInput: {
         name: $name
-        photo: $photo
+        slug: $slug
         description: $description
-        price: $price
-        discountPrice: $discountPrice
-        qty: $qty
-        unit: $unit
-        stock: $stock
         category: $category
       }
     ) {
-      errors {
-        field
-        message
-      }
-      product {
+      id
+      name
+      slug
+      description
+      category {
         id
         name
-        photo
-        description
-        stock
-        qty
-        unit
-        price
-        discountPrice
-        totalSell
-        createdAt
-        category {
-          id
-          name
-        }
       }
     }
   }
