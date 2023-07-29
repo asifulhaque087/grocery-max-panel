@@ -7,6 +7,7 @@ import { TableLoading } from './loading/TableLoading';
 import { ProductInformation } from './form/ProductInformation';
 import { ProductAttribute } from './form/ProductAttribute';
 import { ProductValues } from './form/ProductValues';
+import { LabelInput } from './form/LabelInput';
 
 export {
   RecursiveSidebar,
@@ -14,4 +15,5 @@ export {
   ProductInformation,
   ProductAttribute,
   ProductValues,
+  LabelInput,
 };
