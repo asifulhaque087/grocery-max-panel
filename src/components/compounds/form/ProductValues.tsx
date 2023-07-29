@@ -5,11 +5,11 @@ interface IValue {
   name: string;
   id: number;
 }
-interface ISelectedId {
-  [key: number]: number;
-}
+// interface ISelectedId {
+//   [key: number]: number;
+// }
 
-export const ProductValues = () => {
+export const ProductValues = ({ values }: any) => {
   const [selectedValues, setSelectedValues] = useState<IValue[]>([]);
 
   // const [selectedId, setSelectedId] = useState<ISelectedId>({});
@@ -34,12 +34,12 @@ export const ProductValues = () => {
   //   }
   // };
 
-  const values: IValue[] = [
-    { name: 'red', id: 1 },
-    { name: 'green', id: 2 },
-    { name: 'yellow', id: 3 },
-    { name: 'blue', id: 4 },
-  ];
+  // const values: IValue[] = [
+  //   { name: 'red', id: 1 },
+  //   { name: 'green', id: 2 },
+  //   { name: 'yellow', id: 3 },
+  //   { name: 'blue', id: 4 },
+  // ];
 
   const unSelectValue = (id: number) => {
     const updatedSelectedValues = selectedValues.filter(
@@ -53,7 +53,7 @@ export const ProductValues = () => {
     <div>
       {/* list values */}
       <div className="flex items-center gap-x-[30px]">
-        {values.map((value, i) => {
+        {values.map((value: any) => {
           const itemFound = selectedValues.find((sv) => sv.id == value.id);
           // let index = -1;
           // for (let indx = 0; indx < selectedValues.length; indx++) {
@@ -70,6 +70,7 @@ export const ProductValues = () => {
 
           return (
             <div
+              key={value.id}
               className={`relative text-[13px] tracking-[0.5px] cursor-pointer capitalize  ${
                 itemFound
                   ? 'bg-[rgba(115,103,240,0.48)] text-[rgb(115,103,240)]'
