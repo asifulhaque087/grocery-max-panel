@@ -12,7 +12,7 @@ import {
   storeSingleProduct,
 } from '@src/graphql/reactivities/productVariable';
 import { GET_ATTRIBUTES } from '@src/graphql/queries/attributeQuery';
-import { CREATE_PRODUCT_ATTRIBUTE } from '@src/graphql/mutations/productAttribute';
+import { CREATE_PRODUCT_ATTRIBUTE } from '@src/graphql/mutations/productAttributeMutation';
 
 const colourStyles: StylesConfig = {
   control: (styles, state) => {
@@ -133,6 +133,8 @@ export const ProductAttribute = ({}: IProductAttribute) => {
       );
 
       const option = {
+        productAttributeId: matchFound?.id,
+        productAttributeValues: matchFound?.values,
         id: attribute.id,
         value: attribute.name,
         label: attribute.name,
@@ -148,7 +150,6 @@ export const ProductAttribute = ({}: IProductAttribute) => {
 
     setallAttributeOptions(allOptions);
     if (finalOptions.length) setfianlAttributeOptions(finalOptions);
-
   }, [product, attributes]);
 
   // methods
@@ -160,9 +161,9 @@ export const ProductAttribute = ({}: IProductAttribute) => {
 
   // };
 
-  console.log('all options are ', allAttributeOptions);
+  // console.log('all options are ', allAttributeOptions);
   // console.log('slected options are ', selectedAttributeOption);
-  console.log('finals are ', finalAttributeOptions);
+  // console.log('finals are ', finalAttributeOptions);
 
   return (
     <div className="flex flex-col sm:flex-row items-start justify-center gap-[20px] my-[20px]  bg-[rgb(248,247,250)]">
@@ -202,9 +203,9 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                   onClick={async () => {
                     const response = await createProductAttribute({
                       variables: {
-                        name: selectedAttributeOption?.value,
-                        product: product?.id,
+                        attributeName: selectedAttributeOption?.value,
                         attributeId: selectedAttributeOption?.id,
+                        product: product?.id,
                       },
                       update: (
                         proxy,
@@ -275,7 +276,8 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                     activeAttribute == i ? 'block' : 'hidden'
                   }`}
                 >
-                  <ProductValues values={attribute.values} />
+                  {/* <ProductValues data={attribute} /> */}
+                  <ProductValues data={attribute} />
                 </div>
               </div>
             ))}
