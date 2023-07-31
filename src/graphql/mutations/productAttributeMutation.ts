@@ -3,32 +3,31 @@ import { gql } from '@apollo/client';
 // ============================= CREATE CATEGORY MUTATION =================>
 export const CREATE_PRODUCT_ATTRIBUTE = gql`
   mutation createProductAttribute(
-    $name: String!
-    $product: Int!
+    $attributeName: String!
     $attributeId: Int!
+    $product: Int!
   ) {
     createProductAttribute(
       createProductAttributeInput: {
-        name: $name
-        product: $product
+        attributeName: $attributeName
         attributeId: $attributeId
+        product: $product
       }
     ) {
       id
       name
-      slug
-      description
       category {
         id
         name
       }
       attributes {
         id
+        attributeName
         attributeId
-        name
         values {
           id
-          name
+          valueId
+          valueName
           images {
             id
             isFeatured
