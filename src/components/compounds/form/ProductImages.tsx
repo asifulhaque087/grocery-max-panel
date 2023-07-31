@@ -1,18 +1,64 @@
+'use client';
+
+import { useMutation } from '@apollo/client';
+import { CREATE_PRODUCT_ATTRIBUTE_VALUE_WITH_IMAGES } from '@src/graphql/mutations/productAttributeValueMutation';
+import { storeSingleProduct } from '@src/graphql/reactivities/productVariable';
 import { convertToBase64 } from '@src/utils/convertToBase64';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+interface IGallery {
+  id: number;
+  url: string;
+}
+
+interface IImage {
+  id: number;
+  isFeature: boolean;
+  gallery: IGallery;
+}
 
 interface IValue {
-  name: string;
   id: number;
+  name?: string;
+  valueName?: string;
+  images?: IImage[];
 }
 
 interface IProductImage {
   value: IValue;
   unSelectValue: (id: number) => void;
+  productAttributeId?: number;
+  productId?: number;
+  parentIdAdded?: boolean;
 }
 
-export const ProductImages = ({ value, unSelectValue }: IProductImage) => {
-  const [photos, setPhotos] = useState<string[]>([]);
+interface IInputImage {
+  url: string;
+  isFeatured: boolean;
+}
+
+export const ProductImages = ({
+  value,
+  unSelectValue,
+  productAttributeId,
+  productId,
+  parentIdAdded,
+}: IProductImage) => {
+  // create product
+  const [createProductAttributeValueWithImages] = useMutation(
+    CREATE_PRODUCT_ATTRIBUTE_VALUE_WITH_IMAGES
+  );
+
+  const [selectedPhotos, setselectedPhotos] = useState<IInputImage[]>([]);
+  const [addedPhotos, setAddedPhotos] = useState<IImage[]>([]);
+
+  useEffect(() => {
+    // setAddedPhotos(value?.images)
+
+    // akane images set hobe
+    if (value?.images) setAddedPhotos(value?.images);
+    console.log('the values is from images', value);
+  }, [value]);
 
   return (
     <div
@@ -30,7 +76,7 @@ export const ProductImages = ({ value, unSelectValue }: IProductImage) => {
       <div
         className={`text-[13px] tracking-[0.5px] cursor-pointer capitalize bg-[rgba(115,103,240,0.48)] text-[rgb(115,103,240)] rounded-[4px] px-[15px] py-[5px] w-min grid place-items-center`}
       >
-        {value.name}
+        {parentIdAdded ? value.valueName : value.name}
       </div>
 
       <div className="mt-[10px]">
@@ -41,11 +87,12 @@ export const ProductImages = ({ value, unSelectValue }: IProductImage) => {
             </label>
             <input
               onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
-                let files = await convertToBase64(e.target.files);
+                let unProcessedFiles = e.target.files;
+                let processedFiles = unProcessedFiles?.length
+                  ? await convertToBase64(unProcessedFiles)
+                  : [];
 
-                // console.log('files are ', files);
-
-                setPhotos(files);
+                setselectedPhotos(processedFiles);
               }}
               type="file"
               name="file-input"
@@ -56,29 +103,91 @@ export const ProductImages = ({ value, unSelectValue }: IProductImage) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-x-[10px] gap-y-[20px] flex-wrap mt-[30px]">
-          {photos?.map((photo, i) => (
-            <div key={i} className="relative h-[200px] w-[200px]">
-              {/* remove button */}
-              <span className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center cursor-pointer">
-                x
-              </span>
-              {/* image-box */}
-              <div className="w-full h-full rounded-[6px] border overflow-hidden">
-                <img
-                  className="h-full max-w-full object-cover object-center mx-auto"
-                  src={photo}
-                />
-              </div>
+        {selectedPhotos.length ? (
+          <div>
+            <p className="text-[13px] font-[500] tracking-[0.5px] capitalize mt-[30px]">
+              selected images
+            </p>
+            <div className="flex items-center justify-center gap-x-[10px] gap-y-[20px] flex-wrap mt-[30px]">
+              {selectedPhotos?.map((photo, i) => (
+                <div key={i} className="relative h-[200px] w-[200px]">
+                  {/* remove button */}
+                  <span className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center cursor-pointer">
+                    x
+                  </span>
+                  {/* image-box */}
+                  <div className="w-full h-full rounded-[6px] border overflow-hidden">
+                    <img
+                      className="h-full max-w-full object-cover object-center mx-auto"
+                      src={photo.url}
+                      alt='product'
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <button className="outline-none border-0 px-[16px] py-[8px] rounded-[6px] bg-[#7367f0]  shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent] mt-[10px]">
-          <span className="text-[15px] font-[500] text-white capitalize">
-            Add
-          </span>
-        </button>
+            <button
+              className="outline-none border-0 px-[20px] py-[5px] rounded-[6px] bg-[#7367f0]  shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent] mt-[30px]"
+              onClick={async () => {
+                const response = await createProductAttributeValueWithImages({
+                  variables: {
+                    // attributeName: selectedAttributeOption?.value,
+                    // attributeId: selectedAttributeOption?.id,
+                    // product: product?.id,
+                    valueName: value.name,
+                    valueId: value.id,
+                    images: selectedPhotos,
+                    attribute: productAttributeId,
+                    productId: productId,
+                  },
+                  update: (
+                    proxy,
+                    { data: { createProductAttributeValueWithImages: newData } }
+                  ) => {
+                    if (newData) {
+                      storeSingleProduct(newData);
+                      // setSelectedAttributeOption(undefined);
+                    }
+                  },
+                });
+
+                // console.log('this is save');
+              }}
+            >
+              <span className="text-[13px] font-[500] text-white capitalize">
+                Save value
+              </span>
+            </button>
+          </div>
+        ) : null}
+        {/* this is the location */}
+
+        {addedPhotos.length ? (
+          <div>
+            <p className="text-[13px] font-[500] tracking-[0.5px] capitalize mt-[30px]">
+              added images
+            </p>
+            <div className="flex items-center justify-center gap-x-[10px] gap-y-[20px] flex-wrap mt-[30px]">
+              {addedPhotos?.map((photo, i) => (
+                <div key={i} className="relative h-[200px] w-[200px]">
+                  {/* remove button */}
+                  <span className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center cursor-pointer">
+                    {value.name}
+                  </span>
+                  {/* image-box */}
+                  <div className="w-full h-full rounded-[6px] border overflow-hidden">
+                    <img
+                      className="h-full max-w-full object-cover object-center mx-auto"
+                      // src={photo.url}
+                      src={photo.gallery.url}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
