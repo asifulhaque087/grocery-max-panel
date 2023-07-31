@@ -1,6 +1,6 @@
-const getBase64 = (file) => {
+const getBase64 = (file: File): Promise<string> => {
   return new Promise((resolve) => {
-    let baseURL: any = "";
+    let baseURL: any = '';
     // Make new FileReader
     let reader = new FileReader();
 
@@ -17,11 +17,17 @@ const getBase64 = (file) => {
   });
 };
 
-export const convertToBase64 = async (files) => {
-  let new_list = [];
-  for (let file of files) {
+interface IInputImage {
+  url: string;
+  isFeatured: boolean;
+}
+
+export const convertToBase64 = async (files: FileList) => {
+  let new_list: IInputImage[] = [];
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
     let result = await getBase64(file);
-    new_list = [...new_list, result];
+    new_list = [...new_list, { url: result, isFeatured: false }];
   }
 
   return new_list;
