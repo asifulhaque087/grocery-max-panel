@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
 const meta: Meta<typeof ProductValues> = {
-  title: 'Roots/Form/ProductValues',
+  title: 'Compounds/Form/ProductValues',
   component: ProductValues,
   tags: ['autodocs'],
   argTypes: {},
