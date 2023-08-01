@@ -9,6 +9,8 @@ import { IProductList } from './ProductList';
 import { IRecursiveSidebar } from './RecursiveSidebar';
 import { IProductInformation } from './form/ProductInformation';
 import { IProductAttribute } from './form/ProductAttribute';
+import { IProductValues } from './form/ProductValues';
+import { IProductImage } from './form/ProductImages';
 
 export type {
   IBannerSlider,
@@ -18,4 +20,6 @@ export type {
   IRecursiveSidebar,
   IProductInformation,
   IProductAttribute,
+  IProductValues,
+  IProductImage,
 };
