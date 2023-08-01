@@ -1,45 +1,32 @@
 import { useEffect, useState } from 'react';
 import { ProductImages } from './ProductImages';
 import { useReactiveVar } from '@apollo/client';
-import { singleProductVar } from '@src/graphql/reactivities/productVariable';
+import {
+  IAttributeValue,
+  IProductValue,
+  singleProductVar,
+} from '@src/graphql/reactivities/productVariable';
+import { IProductValues } from '@src/types/compounds';
 
-interface IGallery {
-  id: number;
-  url: string;
-}
+// api values theke sobgula value jkn asbe tkn availableValues set hobe. jotogula available value takbe totogulai select kora jabe
 
-interface IImage {
-  id: number;
-  isFeature: boolean;
-  gallery: IGallery[];
-}
+// selected value holo , kotogula value select oise abailable value theke
 
-interface IValue {
-  id: number;
-  valueId: number;
-  name: string;
-  images?: IImage[];
-}
+// product value holo, added values
 
-interface IData {
-  productAttributeId: number;
-  id: number;
-  productAttributeValues: IValue[];
-  values: IValue[];
-  // value: attribute.name,
-  // label: attribute.name,
-}
+// available value theke added value remove hoye jabe
+// selectecd value theke o added value gula remove hoye jabe.
 
-interface IProductAttribute {
-  data: IData;
-}
-
-export const ProductValues = ({ data }: IProductAttribute) => {
+export const ProductValues = ({
+  apiValues,
+  productAttributeId,
+  addedValues,
+}: IProductValues) => {
   const product = useReactiveVar(singleProductVar);
 
-  const [availabeValues, setAvailableValues] = useState<IValue[]>([]);
-  const [selectedValues, setSelectedValues] = useState<IValue[]>([]);
-  const [productValues, setProductValues] = useState<IValue[]>([]);
+  const [availabeValues, setAvailableValues] = useState<IAttributeValue[]>([]);
+  const [selectedValues, setSelectedValues] = useState<IAttributeValue[]>([]);
+  const [productValues, setProductValues] = useState<IProductValue[]>([]);
 
   // const [selectedId, setSelectedId] = useState<ISelectedId>({});
   const [isImage, setIsImage] = useState<boolean>(false);
@@ -53,34 +40,32 @@ export const ProductValues = ({ data }: IProductAttribute) => {
   };
 
   useEffect(() => {
-    console.log('data is ', data);
+    // console.log('data is ', data);
 
-    const availabeValues: IValue[] = [];
+    const availabeValues: IAttributeValue[] = [];
 
-    for (let i = 0; i < data.values?.length; i++) {
-      const value = data.values[i];
+    for (let i = 0; i < apiValues?.length; i++) {
+      const apiSingleValue = apiValues[i];
 
-      const matchFound = data?.productAttributeValues?.find(
-        (attval) => attval.valueId == value?.id
+      const matchFound = addedValues?.find(
+        (val) => val.valueId == apiSingleValue?.id
       );
 
       if (matchFound) {
         // finalOptions.push(option);
       } else {
-        availabeValues.push(value);
+        availabeValues.push(apiSingleValue);
       }
     }
 
     setAvailableValues(availabeValues);
 
-    const selValues: IValue[] = [];
+    const selValues: IAttributeValue[] = [];
 
-    for (let i = 0; i < data.productAttributeValues?.length; i++) {
-      const value = data.productAttributeValues[i];
+    for (let i = 0; i < selectedValues?.length; i++) {
+      const value: IAttributeValue = selectedValues[i];
 
-      const matchFound = selectedValues?.find(
-        (selval) => selval.id == value?.valueId
-      );
+      const matchFound = addedValues?.find((val) => val.valueId == value?.id);
 
       if (matchFound) {
         // finalOptions.push(option);
@@ -90,10 +75,10 @@ export const ProductValues = ({ data }: IProductAttribute) => {
     }
 
     setSelectedValues(selValues);
-    setProductValues(data.productAttributeValues);
+    setProductValues(addedValues);
 
     // setProductValues(data?.productAttributeValues);
-  }, [data]);
+  }, [apiValues, productAttributeId, addedValues]);
 
   console.log('available values are ', availabeValues);
   console.log('selected values are ', selectedValues);
@@ -224,10 +209,13 @@ export const ProductValues = ({ data }: IProductAttribute) => {
           {selectedValues.map((value, i) => (
             <div key={i}>
               <ProductImages
-                value={value}
                 unSelectValue={unSelectValue}
-                productAttributeId={data?.productAttributeId}
-                productId={product?.id}
+                createApiCallData={{
+                  valueName: value.name,
+                  valueId: value.id,
+                  productAttributeId: productAttributeId,
+                }}
+                productId={product?.id!}
               />
             </div>
           ))}
@@ -248,9 +236,14 @@ export const ProductValues = ({ data }: IProductAttribute) => {
             {productValues.map((value, i) => (
               <div key={i}>
                 <ProductImages
-                  value={value}
                   unSelectValue={unSelectValue}
-                  parentIdAdded={true}
+                  // apiCallData={{
+                  //   valueName: value.valueName,
+                  //   valueId: value.id,
+                  //   productAttributeId: productAttributeId,
+                  // }}
+                  productId={product?.id!}
+                  addedValue={value}
                 />
               </div>
             ))}
