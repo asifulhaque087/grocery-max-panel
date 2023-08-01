@@ -2,35 +2,14 @@
 
 import { useMutation } from '@apollo/client';
 import { CREATE_PRODUCT_ATTRIBUTE_VALUE_WITH_IMAGES } from '@src/graphql/mutations/productAttributeValueMutation';
-import { storeSingleProduct } from '@src/graphql/reactivities/productVariable';
+import {
+  IProductImageRead,
+  storeSingleProduct,
+} from '@src/graphql/reactivities/productVariable';
+import { IProductImage } from '@src/types/compounds';
+import { IProductImageInput } from '@src/types/compounds/form/ProductImages';
 import { convertToBase64 } from '@src/utils/convertToBase64';
 import { useEffect, useState } from 'react';
-
-interface IGallery {
-  id: number;
-  url: string;
-}
-
-interface IImage {
-  id: number;
-  isFeature: boolean;
-  gallery: IGallery;
-}
-
-interface IValue {
-  id: number;
-  name?: string;
-  valueName?: string;
-  images?: IImage[];
-}
-
-interface IProductImage {
-  value: IValue;
-  unSelectValue: (id: number) => void;
-  productAttributeId?: number;
-  productId?: number;
-  parentIdAdded?: boolean;
-}
 
 interface IInputImage {
   url: string;
@@ -38,27 +17,31 @@ interface IInputImage {
 }
 
 export const ProductImages = ({
-  value,
+  // value,
   unSelectValue,
-  productAttributeId,
+  createApiCallData,
+  addedValue,
   productId,
-  parentIdAdded,
-}: IProductImage) => {
+}: // productAttributeId,
+// productId,
+// parentIdAdded,
+IProductImage) => {
   // create product
   const [createProductAttributeValueWithImages] = useMutation(
     CREATE_PRODUCT_ATTRIBUTE_VALUE_WITH_IMAGES
   );
 
   const [selectedPhotos, setselectedPhotos] = useState<IInputImage[]>([]);
-  const [addedPhotos, setAddedPhotos] = useState<IImage[]>([]);
+  const [addedPhotos, setAddedPhotos] = useState<IProductImageRead[]>([]);
 
   useEffect(() => {
     // setAddedPhotos(value?.images)
-
     // akane images set hobe
-    if (value?.images) setAddedPhotos(value?.images);
-    console.log('the values is from images', value);
-  }, [value]);
+    // if (apiCallData?.) setAddedPhotos(value?.images);
+    // console.log('the values is from images', value);
+
+    if (addedValue?.images) setAddedPhotos(addedValue?.images);
+  }, [createApiCallData]);
 
   return (
     <div
@@ -67,7 +50,10 @@ export const ProductImages = ({
       {/* remove button */}
       <span
         className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center cursor-pointer"
-        onClick={() => unSelectValue(value.id)}
+        onClick={() => {
+          if (createApiCallData) unSelectValue(createApiCallData.valueId);
+        }}
+        // onClick={() => unSelectValue(createApiCallData?.valueId)}
       >
         x
       </span>
@@ -76,7 +62,9 @@ export const ProductImages = ({
       <div
         className={`text-[13px] tracking-[0.5px] cursor-pointer capitalize bg-[rgba(115,103,240,0.48)] text-[rgb(115,103,240)] rounded-[4px] px-[15px] py-[5px] w-min grid place-items-center`}
       >
-        {parentIdAdded ? value.valueName : value.name}
+        {createApiCallData
+          ? createApiCallData.valueName
+          : addedValue?.valueName}
       </div>
 
       <div className="mt-[10px]">
@@ -120,7 +108,7 @@ export const ProductImages = ({
                     <img
                       className="h-full max-w-full object-cover object-center mx-auto"
                       src={photo.url}
-                      alt='product'
+                      alt="product"
                     />
                   </div>
                 </div>
@@ -135,10 +123,12 @@ export const ProductImages = ({
                     // attributeName: selectedAttributeOption?.value,
                     // attributeId: selectedAttributeOption?.id,
                     // product: product?.id,
-                    valueName: value.name,
-                    valueId: value.id,
+                    // valueName: value.name,
+                    // valueId: value.id,
+                    // attribute: productAttributeId,
+
+                    ...createApiCallData,
                     images: selectedPhotos,
-                    attribute: productAttributeId,
                     productId: productId,
                   },
                   update: (
@@ -173,14 +163,14 @@ export const ProductImages = ({
                 <div key={i} className="relative h-[200px] w-[200px]">
                   {/* remove button */}
                   <span className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center cursor-pointer">
-                    {value.name}
+                    {addedValue?.valueName}
                   </span>
                   {/* image-box */}
                   <div className="w-full h-full rounded-[6px] border overflow-hidden">
                     <img
                       className="h-full max-w-full object-cover object-center mx-auto"
                       // src={photo.url}
-                      src={photo.gallery.url}
+                      src={photo?.gallery?.url}
                     />
                   </div>
                 </div>
