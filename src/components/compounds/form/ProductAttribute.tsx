@@ -8,11 +8,16 @@ import { ProductValues } from './ProductValues';
 import { LiaAngleDownSolid } from 'react-icons/lia';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import {
+  IAttribute,
   singleProductVar,
   storeSingleProduct,
 } from '@src/graphql/reactivities/productVariable';
 import { GET_ATTRIBUTES } from '@src/graphql/queries/attributeQuery';
 import { CREATE_PRODUCT_ATTRIBUTE } from '@src/graphql/mutations/productAttributeMutation';
+import {
+  IAttributeSelectFormat,
+  IProductAttributeAndSendValues,
+} from '@src/types/compounds/form/ProductAttribute';
 
 const colourStyles: StylesConfig = {
   control: (styles, state) => {
@@ -71,86 +76,66 @@ const colourStyles: StylesConfig = {
   }),
 };
 
-interface IOptionValue {
-  id: number;
-  name: string;
-}
-interface IOption {
-  id: number;
-  value: string;
-  label: string;
-  values: IOptionValue[];
-}
+// sobgula apiAttributes asbe api theke
+// tarpore attributeName and attributeId select korbe
+// attributeName = apiAttribute.name
+// attributeId = apiAttribute.id
+// r productId asbe product global state theke
 
 export const ProductAttribute = ({}: IProductAttribute) => {
   // fetch data
-  let { loading, data: { attributes } = {} } = useQuery(GET_ATTRIBUTES);
+  let { loading, data: { apiAttributes } = {} } = useQuery(GET_ATTRIBUTES);
 
   // create product
   const [createProductAttribute] = useMutation(CREATE_PRODUCT_ATTRIBUTE);
 
   const product = useReactiveVar(singleProductVar);
 
-  // console.log('product is ', product);
-
   // states
 
-  const [allAttributeOptions, setallAttributeOptions] = useState([]);
+  const [allAttributeOptions, setallAttributeOptions] = useState<
+    IAttributeSelectFormat[]
+  >([]);
   const [selectedAttributeOption, setSelectedAttributeOption] =
-    useState<IOption>();
-  const [finalAttributeOptions, setfianlAttributeOptions] = useState([]);
+    useState<IAttributeSelectFormat>();
+  const [addedAttributeOptions, setAddedAttributeOptions] = useState<
+    IProductAttributeAndSendValues[]
+  >([]);
 
   // always api theke asbe
   // const [finalAttributes, setFianlAttributes] = useState<any>([]);
   const [activeAttribute, setActiveAttribute] = useState(-1);
 
-  // const options = attributes?.map((attribute: any) => {
-  //   return {
-  //     id: attribute.id,
-  //     value: attribute.name,
-  //     label: attribute.name,
-  //     values: attribute.values,
-  //   };
-  // });
-
-  // const finalAttributes = product?.attributes?.map((attribute) => {
-  //   return {
-  //     value: attribute.name,
-  //     label: attribute.name,
-  //     values: attribute.values,
-  //   };
-  // });
-
   useEffect(() => {
-    const allOptions = [];
-    const finalOptions = [];
+    const allOptions: IAttributeSelectFormat[] = [];
+    const finalOptions: IProductAttributeAndSendValues[] = [];
 
-    for (let i = 0; i < attributes?.length; i++) {
-      const attribute = attributes[i];
+    for (let i = 0; i < apiAttributes?.length; i++) {
+      const attribute: IAttribute = apiAttributes[i];
 
       const matchFound = product?.attributes?.find(
         (att) => att.attributeId == attribute?.id
       );
 
-      const option = {
-        productAttributeId: matchFound?.id,
-        productAttributeValues: matchFound?.values,
-        id: attribute.id,
-        value: attribute.name,
+      const option: IAttributeSelectFormat = {
+        value: attribute.id,
         label: attribute.name,
-        values: attribute.values,
       };
 
       if (matchFound) {
-        finalOptions.push(option);
+        const prepareAttribute: IProductAttributeAndSendValues = {
+          ...matchFound,
+          apiValues: attribute.values,
+        };
+        finalOptions.push(prepareAttribute);
       } else {
         allOptions.push(option);
       }
     }
 
     setallAttributeOptions(allOptions);
-    if (finalOptions.length) setfianlAttributeOptions(finalOptions);
-  }, [product, attributes]);
+    if (finalOptions.length) setAddedAttributeOptions(finalOptions);
+  }, [product, apiAttributes]);
 
   // methods
   const handleSelectAttributes = (selectedOption: any) => {
@@ -195,7 +180,7 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                 <p
                   className={`text-[#24334A] text-[14px] tracking-[0.5px] cursor-pointer capitalize text-center`}
                 >
-                  {selectedAttributeOption?.value}
+                  {selectedAttributeOption?.label}
                 </p>
 
                 <button
@@ -203,8 +188,8 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                   onClick={async () => {
                     const response = await createProductAttribute({
                       variables: {
-                        attributeName: selectedAttributeOption?.value,
-                        attributeId: selectedAttributeOption?.id,
+                        attributeName: selectedAttributeOption?.label,
+                        attributeId: selectedAttributeOption?.value,
                         product: product?.id,
                       },
                       update: (
@@ -229,7 +214,7 @@ export const ProductAttribute = ({}: IProductAttribute) => {
 
           {/* final attributes */}
           <div className="mt-[20px]">
-            {finalAttributeOptions?.map((attribute: any, i: number) => (
+            {addedAttributeOptions?.map((productAttribute, i: number) => (
               <div key={i}>
                 <div className="flex items-center gap-x-[20px]">
                   <div
@@ -243,7 +228,7 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                     <span
                       className={`text-[#24334A] text-[14px] tracking-[0.5px] cursor-pointer capitalize`}
                     >
-                      {attribute?.value}
+                      {productAttribute?.name}
                     </span>
 
                     <span>
@@ -277,7 +262,11 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                   }`}
                 >
                   {/* <ProductValues data={attribute} /> */}
-                  <ProductValues data={attribute} />
+                  <ProductValues
+                    apiValues={productAttribute.apiValues}
+                    addedValues={productAttribute.values}
+                    productAttributeId={productAttribute.id}
+                  />
                 </div>
               </div>
             ))}
