@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Editor } from '@src/components/roots';
 import { IProductInformation } from '@src/types/compounds';
@@ -10,12 +10,24 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { storeSingleProduct } from '@src/graphql/reactivities/productVariable';
-import { useMutation } from '@apollo/client';
+import {
+  singleProductVar,
+  storeSingleProduct,
+} from '@src/graphql/reactivities/productVariable';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { CREATE_PRODUCT } from '@src/graphql/mutations/productMutation';
+import { useRouter } from 'next/navigation';
 
-export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
+export const ProductInformation = ({
+  setActiveIndex,
+  fromEdit,
+}: IProductInformation) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
+  // reactive variable
+  const product = useReactiveVar(singleProductVar);
 
   // create product
   const [createProduct] = useMutation(CREATE_PRODUCT);
@@ -24,11 +36,18 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
     register,
     control,
     handleSubmit,
+    // setValue,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
+      // name: product?.name ? product.name : '',
       name: '',
+      // name: product?.name,
+      // name: "hello ",
+      // slug: product?.slug ? product.slug : '',
       slug: '',
+      // description: product?.description ? product.description : '',
       description: '',
     },
   });
@@ -51,7 +70,11 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
 
         if (newData) {
           storeSingleProduct(newData);
-          setActiveIndex(1);
+
+          if (fromEdit) setActiveIndex(1);
+
+          if (!fromEdit) router.push(`/product/edit/${newData.id}`);
+
           // if (data) {
           //   proxy.writeQuery({
           //     query: GET_PRODUCTS_BY_ADMIN,
@@ -80,6 +103,16 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
     //   actions.setErrors(errorsMap);
     // }
   };
+
+  useEffect(() => {
+    if (product && fromEdit) {
+      reset({
+        name: product.name,
+        slug: product.slug,
+        description: product.description,
+      });
+    }
+  }, [product]);
 
   return (
     <div className="flex flex-col sm:flex-row items-start justify-center gap-[20px] my-[20px]  bg-[rgb(248,247,250)]">
@@ -137,7 +170,7 @@ export const ProductInformation = ({ setActiveIndex }: IProductInformation) => {
             // onClick={() => setActiveIndex(1)}
           >
             <span className="text-[15px] font-[500] text-white capitalize">
-              next
+              {fromEdit ? 'update' : 'next'}
             </span>
           </button>
         </form>
