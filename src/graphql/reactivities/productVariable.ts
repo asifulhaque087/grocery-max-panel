@@ -33,7 +33,7 @@ export interface IProductValue {
 
 export interface IProductErAttribute {
   id: number;
-  name: string;
+  attributeName: string;
   attributeId: number;
   values: IProductValue[];
 }
