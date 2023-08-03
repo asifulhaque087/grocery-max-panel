@@ -140,39 +140,6 @@ export const ProductValues = ({
         </span>
       </div>
 
-      {/* <p>selected values</p>
-        <div className="flex items-center gap-x-[30px] mt-[15px]">
-          {selectedValues.map((value: any) => {
-            const itemFound = selectedValues.find((sv) => sv.id == value.id);
-
-            return (
-              <div
-                key={value.id}
-                className={`relative text-[13px] tracking-[0.5px] cursor-pointer capitalize  ${
-                  itemFound
-                    ? 'bg-[rgba(115,103,240,0.48)] text-[rgb(115,103,240)]'
-                    : 'bg-gray-400 text-white'
-                }  rounded-[4px] px-[15px] py-[5px] grid place-items-center`}
-                onClick={() => setSelectedValues([...selectedValues, value])}
-              >
-                {itemFound ? (
-                  <span
-                    className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      unSelectValue(value.id);
-                    }}
-                  >
-                    x
-                  </span>
-                ) : null}
-
-                {value.name}
-              </div>
-            );
-          })}
-        </div> */}
-
       {!isImage ? (
         <button className="outline-none border-0 px-[20px] py-[5px] rounded-[6px] bg-[#7367f0]  shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent] mt-[30px]">
           <span className="text-[13px] font-[500] text-white capitalize">
@@ -181,31 +148,13 @@ export const ProductValues = ({
         </button>
       ) : null}
 
-      {/* upload images for values */}
-
-      {/* <div className="flex flex-col gap-y-[10px] mt-[50px]">
-        {isImage &&
-          selectedValues.map((value, i) => (
-            <div key={i}>
-              <ProductImages
-                value={value}
-                unSelectValue={unSelectValue}
-              />
-            </div>
-          ))}
-      </div> */}
-
       <div
         className={`${selectedValues.length && isImage ? 'block' : 'hidden'}`}
       >
-        <p className="text-[13px] font-[500] tracking-[0.5px] capitalize mt-[15px]">
+        <p className="text-[13px] font-[500] tracking-[0.5px] mt-[30px] bg-indigo-500 rounded-[6px] px-[15px] py-[5px] text-white uppercase ">
           selected items
         </p>
-        <div
-          className={`flex flex-col gap-y-[10px] mt-[15px] ${
-            !isImage && '!hidden'
-          }`}
-        >
+        <div className={`flex flex-col gap-y-[10px] mt-[15px]`}>
           {selectedValues.map((value, i) => (
             <div key={i}>
               <ProductImages
@@ -223,7 +172,7 @@ export const ProductValues = ({
       </div>
 
       <div className={`${!productValues.length && 'hidden'}`}>
-        <p className="text-[13px] font-[500] tracking-[0.5px] capitalize mt-[15px]">
+        <p className="text-[13px] font-[500] tracking-[0.5px] mt-[30px] bg-indigo-500 rounded-[6px] px-[15px] py-[5px] text-white uppercase ">
           added items
         </p>
 
