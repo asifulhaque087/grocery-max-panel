@@ -5,7 +5,7 @@ export const CREATE_PRODUCT_ATTRIBUTE_VALUE_WITH_IMAGES = gql`
   mutation createProductAttributeValueWithImages(
     $valueName: String!
     $valueId: Int!
-    $attribute: Int!
+    $productAttributeId: Int!
     $productId: Int!
     $images: [Urls!]!
   ) {
@@ -13,7 +13,7 @@ export const CREATE_PRODUCT_ATTRIBUTE_VALUE_WITH_IMAGES = gql`
       createProductAttributeValueWithImagesInput: {
         valueName: $valueName
         valueId: $valueId
-        attribute: $attribute
+        productAttributeId: $productAttributeId
         productId: $productId
         images: $images
       }
