@@ -84,7 +84,8 @@ const colourStyles: StylesConfig = {
 
 export const ProductAttribute = ({}: IProductAttribute) => {
   // fetch data
-  let { loading, data: { apiAttributes } = {} } = useQuery(GET_ATTRIBUTES);
+  let { loading, data: { attributes: apiAttributes } = {} } =
+    useQuery(GET_ATTRIBUTES);
 
   // create product
   const [createProductAttribute] = useMutation(CREATE_PRODUCT_ATTRIBUTE);
@@ -228,7 +229,7 @@ export const ProductAttribute = ({}: IProductAttribute) => {
                     <span
                       className={`text-[#24334A] text-[14px] tracking-[0.5px] cursor-pointer capitalize`}
                     >
-                      {productAttribute?.name}
+                      {productAttribute?.attributeName}
                     </span>
 
                     <span>
