@@ -39,9 +39,20 @@ IProductImage) => {
     // akane images set hobe
     // if (apiCallData?.) setAddedPhotos(value?.images);
     // console.log('the values is from images', value);
+    console.log('hello from images');
+    // setselectedPhotos([]);
 
     if (addedValue?.images) setAddedPhotos(addedValue?.images);
   }, [createApiCallData]);
+
+  const handleImage = (images: IInputImage[]) => {
+    // console.log('hello from handle image');
+    setselectedPhotos(images);
+  };
+
+  const valueName = createApiCallData
+    ? createApiCallData.valueName
+    : addedValue?.valueName;
 
   return (
     <div
@@ -62,33 +73,41 @@ IProductImage) => {
       <div
         className={`text-[13px] tracking-[0.5px] cursor-pointer capitalize bg-[rgba(115,103,240,0.48)] text-[rgb(115,103,240)] rounded-[4px] px-[15px] py-[5px] w-min grid place-items-center`}
       >
-        {createApiCallData
+        {/* {createApiCallData
           ? createApiCallData.valueName
-          : addedValue?.valueName}
+          : addedValue?.valueName} */}
+        {valueName}
       </div>
 
       <div className="mt-[10px]">
-        <div className="flex flex-col gap-y-[5px]">
-          <div>
-            <label htmlFor="file-input" className="sr-only">
-              Choose file
-            </label>
+        <div>
+          <label
+            htmlFor={`file-input-${valueName}`}
+            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-[#7367f0] focus:ring-[#7367f0]  bg-transparent  bg-gray-100 mr-4 py-3 px-4 capitalize"
+          >
+            <span>
+              choose file {selectedPhotos.length ? selectedPhotos.length : null}
+            </span>
             <input
               onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
                 let unProcessedFiles = e.target.files;
                 let processedFiles = unProcessedFiles?.length
                   ? await convertToBase64(unProcessedFiles)
                   : [];
+                // console.log('from from on change');
 
-                setselectedPhotos(processedFiles);
+                // setselectedPhotos(processedFiles);
+
+                handleImage(processedFiles);
               }}
               type="file"
               name="file-input"
-              id="file-input"
+              // id="file-input"
+              id={`file-input-${valueName}`}
               multiple
-              className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-[#7367f0] focus:ring-[#7367f0] dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
+              className="hidden"
             />
-          </div>
+          </label>
         </div>
 
         {selectedPhotos.length ? (
@@ -136,6 +155,7 @@ IProductImage) => {
                     { data: { createProductAttributeValueWithImages: newData } }
                   ) => {
                     if (newData) {
+                      setselectedPhotos([]);
                       storeSingleProduct(newData);
                       // setSelectedAttributeOption(undefined);
                     }
@@ -163,7 +183,7 @@ IProductImage) => {
                 <div key={i} className="relative h-[200px] w-[200px]">
                   {/* remove button */}
                   <span className="absolute bottom-[100%] left-[100%] -translate-x-[10px] translate-y-[10px] w-[15px] h-[15px] rounded-full text-[8px] bg-white border border-red-500 text-red-500 grid place-items-center cursor-pointer">
-                    {addedValue?.valueName}
+                    {/* {addedValue?.valueName} */}x
                   </span>
                   {/* image-box */}
                   <div className="w-full h-full rounded-[6px] border overflow-hidden">
