@@ -12,6 +12,11 @@ export default meta;
 type Story = StoryObj<typeof Product>;
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     product: {
       id: '12345',

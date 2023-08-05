@@ -70,5 +70,10 @@ const PaginationWithHooks = () => {
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   render: () => <PaginationWithHooks />,
 };

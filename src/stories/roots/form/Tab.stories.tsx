@@ -28,6 +28,11 @@ const TabWrapper = (args: ITab) => {
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     tabs: [
       {

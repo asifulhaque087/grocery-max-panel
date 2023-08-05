@@ -308,6 +308,11 @@ categories.map((cat) => {
 });
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     categories: newData,
   },

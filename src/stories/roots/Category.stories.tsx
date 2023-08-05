@@ -12,6 +12,11 @@ export default meta;
 type Story = StoryObj<typeof Category>;
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     id: '29839283',
     name: 'electronics',

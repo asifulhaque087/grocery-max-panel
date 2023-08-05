@@ -49,6 +49,11 @@ const Wrapper = (args: ILabelInput) => {
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     id: 'email',
     label: 'Email',

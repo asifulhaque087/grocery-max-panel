@@ -35,6 +35,11 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Normal: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     label: 'Button',
     colorScheme: 'green',

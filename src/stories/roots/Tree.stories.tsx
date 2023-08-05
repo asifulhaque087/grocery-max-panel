@@ -342,5 +342,10 @@ const TreeWithHooks = () => {
 };
 
 export const Primry: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   render: () => <TreeWithHooks />,
 };

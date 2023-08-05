@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
 const meta: Meta<typeof ProductInformation> = {
-  title: 'Roots/Form/ProductInformation',
+  title: 'Compounds/Form/ProductInformation',
   component: ProductInformation,
   tags: ['autodocs'],
   argTypes: {},
@@ -24,6 +24,11 @@ const Wrapper = (args: IProductInformation) => {
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {},
   render: (args) => <Wrapper {...args} />,
 };

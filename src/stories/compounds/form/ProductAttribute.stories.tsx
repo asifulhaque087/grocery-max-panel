@@ -1,4 +1,6 @@
+import { ApolloProvider } from '@apollo/client';
 import { ProductAttribute } from '@src/components/compounds';
+import client from '@src/graphql/client';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
@@ -17,12 +19,19 @@ const Wrapper = (args: any) => {
 
   return (
     <>
-      <ProductAttribute {...args} setActiveIndex={setActiveIndex} />
+      <ApolloProvider client={client}>
+        <ProductAttribute {...args} setActiveIndex={setActiveIndex} />
+      </ApolloProvider>
     </>
   );
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {},
   render: (args) => <Wrapper {...args} />,
 };

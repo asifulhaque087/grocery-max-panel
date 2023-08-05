@@ -66,5 +66,10 @@ const RowWithHooks = () => {
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   render: () => <RowWithHooks />,
 };

@@ -19,6 +19,11 @@ const Wrapper = (args: any) => {
 };
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {},
   render: (args) => <Wrapper {...args} />,
 };

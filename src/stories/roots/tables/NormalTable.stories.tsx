@@ -119,6 +119,11 @@ const tableData = [
 ];
 
 export const Primary: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     columns,
     tableData,
