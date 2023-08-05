@@ -4,4 +4,6 @@
 
 import { fontColorSelector } from './fontColorSelector';
 import { bgColorSelector } from './bgColorSelector';
-export { fontColorSelector, bgColorSelector };
+import { generateCombinations } from './generateCombinations';
+import { sortString } from './sortString';
+export { fontColorSelector, bgColorSelector, generateCombinations, sortString };
