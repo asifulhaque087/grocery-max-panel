@@ -38,15 +38,25 @@ export interface IProductErAttribute {
   values: IProductValue[];
 }
 
-interface IProduct {
+interface ICombination {
+  id: number;
+  combinationString: string;
+  uniqueStringId: string;
+  sku: string;
+  price: number;
+  avilableStock: number;
+}
+
+export interface IProductApi {
   id: number;
   name: string;
   slug: string;
   description?: string;
   attributes: IProductErAttribute[] | [];
+  combinations: ICombination[] | [];
 }
 
-export const singleProductVar = makeVar<IProduct | null>(null);
+export const singleProductVar = makeVar<IProductApi | null>(null);
 
 export const storeSingleProduct = (product: any) => {
   singleProductVar(product);
