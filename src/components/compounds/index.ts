@@ -8,6 +8,8 @@ import { ProductInformation } from './form/ProductInformation';
 import { ProductAttribute } from './form/ProductAttribute';
 import { ProductValues } from './form/ProductValues';
 import { LabelInput } from './form/LabelInput';
+import { ProductCombinationList } from './form/ProductCombinationList';
+import { ProductImages } from './form/ProductImages';
 
 export {
   RecursiveSidebar,
@@ -16,4 +18,6 @@ export {
   ProductAttribute,
   ProductValues,
   LabelInput,
+  ProductCombinationList,
+  ProductImages,
 };
