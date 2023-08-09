@@ -1,7 +1,8 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 export interface ILabelInput {
-  id: string;
+  name: string;
+  htmlFor: string;
   label: string;
   type?: string;
   disabled?: boolean;
