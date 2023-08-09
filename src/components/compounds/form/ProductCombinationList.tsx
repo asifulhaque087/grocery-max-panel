@@ -3,6 +3,9 @@
 import { IProductApi } from '@src/graphql/reactivities/productVariable';
 import { generateCombinations, sortString } from '@src/utils';
 import { useState, useEffect } from 'react';
+import { LiaAngleDownSolid } from 'react-icons/lia';
+import { CombinationForm } from './CombinationForm';
+import { IDyCombinationObj } from '@src/utils/generateCombinations';
 
 const product: IProductApi = {
   id: 1,
@@ -138,7 +141,8 @@ const product: IProductApi = {
   combinations: [
     {
       id: 1,
-      combinationString: 'red-l',
+      // combinationString: 'red-l',
+      combinationString: JSON.stringify({ color: 'red', size: 'l' }),
       uniqueStringId: 'delr',
       sku: 'PROD001-RED-S',
       price: 19.99,
@@ -147,8 +151,19 @@ const product: IProductApi = {
 
     {
       id: 2,
-      combinationString: 'green-m',
+      // combinationString: 'green-m',
+      combinationString: JSON.stringify({ color: 'green', size: 'm' }),
       uniqueStringId: 'eegmnr',
+      sku: 'PROD001-RED-S',
+      price: 19.99,
+      avilableStock: 50,
+    },
+
+    {
+      id: 3,
+      // combinationString: 'green-m',
+      combinationString: JSON.stringify({ color: 'green', size: 'x' }),
+      uniqueStringId: 'eegnrx',
       sku: 'PROD001-RED-S',
       price: 19.99,
       avilableStock: 50,
@@ -194,21 +209,27 @@ const product: IProductApi = {
 
 export const ProductCombinationList = () => {
   const [availableCombinations, setAvailableCombinations] = useState<
-    string[][]
+    IDyCombinationObj[][]
   >([]);
+
   // const [availableCombinations, setAvailableCombinations] = useState<string[][]>([]);
 
   useEffect(() => {
     const ans = generateCombinations(0, [], product);
+    console.log('ans is ', ans);
 
-    const combinations: string[][] = [];
+    const combinations: IDyCombinationObj[][] = [];
+
     for (let i = 0; i < ans.length; i++) {
-      let current_com_string = ans[i].join('');
-      let sorted_current_com_string = sortString(current_com_string);
+      let current_com = ans[i];
+      let getValues = current_com.map((com) => Object.values(com));
+      let sorted_current_com_string = sortString(getValues.join(''));
 
       const matchFound = product.combinations.find(
         (com) => com.uniqueStringId == sorted_current_com_string
       );
+
+      console.log('getValues are ', matchFound);
 
       if (!matchFound) {
         combinations.push(ans[i]);
@@ -226,21 +247,39 @@ export const ProductCombinationList = () => {
     // let st2 = "red-xl"
     // console.log(st1 == st2)
 
-    // console.log(sortString(st1));
+    let st1 = 'greenx';
+
+    console.log(sortString(st1));
     // console.log(sortString(st2));
   }, []);
 
-  console.log('the combination are ', availableCombinations);
+  // console.log('the combination are ', availableCombinations);
 
   return (
-    <div>
+    <div className="flex flex-col gap-[15px]">
       {availableCombinations.map((com, i) => (
-        <div key={i} className="flex items-center gap-x-[15px]">
-          {com.map((value) => (
-            <span key={value}>{value}</span>
-          ))}
-          {/* <header>this si header</header> */}
-          {/* <div>this is form for this combination</div> */}
+        <div key={i}>
+          <div className="w-full flex items-center gap-[20px] bg-white py-[20px] px-[30px]  rounded-t-[6px] border shadow-custom">
+            {com.map((obj) => {
+              return Object.values(obj).map((val) => (
+                <span
+                  key={val}
+                  className={` text-[13px] tracking-[0.5px] px-[10px] py-[5px] cursor-pointer capitalize bg-indigo-500 text-white rounded`}
+                >
+                  {val}
+                </span>
+              ));
+            })}
+
+            <span className="ml-auto">
+              <LiaAngleDownSolid size={16} />
+            </span>
+          </div>
+          {/* form  */}
+          <CombinationForm
+            productId={2}
+            combinationString={JSON.stringify(com)}
+          />
         </div>
       ))}
 
@@ -249,13 +288,35 @@ export const ProductCombinationList = () => {
       </p>
 
       {product.combinations.map((com, i) => (
-        <div key={i} className="flex items-center gap-[15px]">
-          {/* header */}
-          {/* <header>this is added header</header> */}
-          {/* <div>this is form for this added combination</div> */}
-          {com.combinationString.split('-').map((val) => (
-            <div key={val}>{val}</div>
-          ))}
+        <div key={i}>
+          <div className="w-full flex items-center gap-[20px] bg-white py-[20px] px-[30px]  rounded-t-[6px] border shadow-custom">
+            {Object.values(JSON.parse(com.combinationString)).map(
+              (val: any) => (
+                // <div key={val}>{val}</div>
+
+                <span
+                  key={val}
+                  className={` text-[13px] tracking-[0.5px] px-[10px] py-[5px] cursor-pointer capitalize bg-indigo-500 text-white rounded`}
+                >
+                  {val}
+                </span>
+              )
+            )}
+
+            <span className="ml-auto">
+              <LiaAngleDownSolid size={16} />
+            </span>
+          </div>
+          {/* form  */}
+          <div>
+            <CombinationForm
+              avilableStock={com.avilableStock}
+              price={com.price}
+              sku={com.sku}
+              combinationString={com.combinationString}
+              isEdit={true}
+            />
+          </div>
         </div>
       ))}
     </div>
