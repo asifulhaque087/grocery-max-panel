@@ -32,7 +32,7 @@ jobs:
               git pull
 
             else
-              git clone git@github.com:asifulhaque087/grocery-max-panel.git grocery-max-panel 
+              git clone git@grocery-max-panel:asifulhaque087/grocery-max-panel.git grocery-max-panel 
             fi
 
       - name: 'Create env file'
