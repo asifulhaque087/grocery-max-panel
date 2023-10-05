@@ -1,4 +1,5 @@
 'use client';
+
 export const dynamic = 'force-dynamic';
 
 import { IProductAttribute } from '@src/types/compounds';
@@ -92,6 +93,7 @@ export const ProductAttribute = ({}: IProductAttribute) => {
 
   const product = useReactiveVar(singleProductVar);
 
+    console.log('hello world');
   // states
 
   const [allAttributeOptions, setallAttributeOptions] = useState<

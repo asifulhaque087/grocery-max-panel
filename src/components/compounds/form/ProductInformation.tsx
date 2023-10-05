@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 
 import { Editor } from '@src/components/roots';
 import { IProductInformation } from '@src/types/compounds';
-import { LabelInput } from './LabelInput';
+import { LabelInput } from '@src/components/roots';
+
 import {
   Controller,
   FieldValues,

@@ -1,3 +1,5 @@
+'use client';
+import { LabelInput } from '@src/components/roots';
 import { useState } from 'react';
 
 import {
@@ -6,7 +8,6 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { LabelInput } from './LabelInput';
 
 interface ICombinationForm {
   productId?: number;

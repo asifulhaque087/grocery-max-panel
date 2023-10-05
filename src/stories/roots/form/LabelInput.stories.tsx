@@ -55,7 +55,8 @@ export const Primary: Story = {
     },
   },
   args: {
-    id: 'email',
+    name: 'email',
+    htmlFor: 'email',
     label: 'Email',
     required: true,
   },

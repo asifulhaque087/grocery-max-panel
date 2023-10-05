@@ -7,7 +7,6 @@ import { TableLoading } from './loading/TableLoading';
 import { ProductInformation } from './form/ProductInformation';
 import { ProductAttribute } from './form/ProductAttribute';
 import { ProductValues } from './form/ProductValues';
-import { LabelInput } from './form/LabelInput';
 import { ProductCombinationList } from './form/ProductCombinationList';
 import { ProductImages } from './form/ProductImages';
 import { CombinationForm } from './form/CombinationForm';
@@ -18,7 +17,6 @@ export {
   ProductInformation,
   ProductAttribute,
   ProductValues,
-  LabelInput,
   ProductCombinationList,
   ProductImages,
   CombinationForm,

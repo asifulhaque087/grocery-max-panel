@@ -22,7 +22,8 @@ import { ProductAddPage } from '@src/components/pages';
 // const dataPromise = fetchData();
 
 const page = () => {
-  return <ProductAddPage fromEdit={false} />;
+  // return <ProductAddPage fromEdit={false} />;
+  return <ProductAddPage fromEdit={true} />;
 };
 
 export default page;
