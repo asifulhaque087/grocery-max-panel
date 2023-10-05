@@ -24,7 +24,7 @@ const Wrapper = (args: IProductInformation) => {
         <ProductInformation
           {...args}
           setActiveIndex={setActiveIndex}
-          fromEdit={true}
+          // fromEdit={true}
         />
       </ApolloProvider>
     </>
