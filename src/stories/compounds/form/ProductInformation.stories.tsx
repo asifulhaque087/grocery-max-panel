@@ -1,4 +1,6 @@
+import { ApolloProvider } from '@apollo/client';
 import { ProductInformation } from '@src/components/compounds';
+import client from '@src/graphql/client';
 import { IProductInformation } from '@src/types/compounds';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
@@ -18,7 +20,13 @@ const Wrapper = (args: IProductInformation) => {
 
   return (
     <>
-      <ProductInformation {...args} setActiveIndex={setActiveIndex} />
+      <ApolloProvider client={client}>
+        <ProductInformation
+          {...args}
+          setActiveIndex={setActiveIndex}
+          fromEdit={true}
+        />
+      </ApolloProvider>
     </>
   );
 };

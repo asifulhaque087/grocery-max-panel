@@ -128,7 +128,8 @@ export const ProductInformation = ({
         >
           {/* name */}
           <LabelInput
-            id="name"
+            name="name"
+            htmlFor="name"
             label="Product Name"
             required={true}
             disabled={isLoading}
@@ -138,7 +139,8 @@ export const ProductInformation = ({
 
           {/* slug */}
           <LabelInput
-            id="slug"
+            name="slug"
+            htmlFor="slug"
             label="Product Slug"
             required={true}
             disabled={isLoading}
