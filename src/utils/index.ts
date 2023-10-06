@@ -6,4 +6,13 @@ import { fontColorSelector } from './fontColorSelector';
 import { bgColorSelector } from './bgColorSelector';
 import { generateCombinations } from './generateCombinations';
 import { sortString } from './sortString';
-export { fontColorSelector, bgColorSelector, generateCombinations, sortString };
+import { organizeRecursiveItems } from './organizeRecursiveItems';
+import { formatItemsForReactSelect } from './formatItemsForReactSelect';
+export {
+  fontColorSelector,
+  bgColorSelector,
+  generateCombinations,
+  sortString,
+  formatItemsForReactSelect,
+  organizeRecursiveItems,
+};

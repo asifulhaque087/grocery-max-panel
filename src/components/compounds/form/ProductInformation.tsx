@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-import { Editor } from '@src/components/roots';
+import { Editor, SelectField } from '@src/components/roots';
 import { IProductInformation } from '@src/types/compounds';
 import { LabelInput } from '@src/components/roots';
 
@@ -18,12 +18,17 @@ import {
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { CREATE_PRODUCT } from '@src/graphql/mutations/productMutation';
 import { useRouter } from 'next/navigation';
+import { formatItemsForReactSelect, organizeRecursiveItems } from '@src/utils';
+import { ICategory } from '@src/types/models';
 
 export const ProductInformation = ({
   setActiveIndex,
   fromEdit,
 }: IProductInformation) => {
+  // local states
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  // const [brands, setBrands] = useState<IBrand[]>([]);
 
   const router = useRouter();
 
@@ -148,6 +153,35 @@ export const ProductInformation = ({
             register={register}
             errors={errors}
           />
+
+          {/* Categories */}
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="categories"
+              className="text-[13px] text-[#292D32] capitalize"
+            >
+              product categories
+            </label>
+
+            <SelectField
+              isMulti={true}
+              control={control}
+              controller={Controller}
+              selectLabel="Category"
+              selectName="category_id"
+              // defaultValue={[{ value: 'RED', label: 'Red' }]}
+              selectOptions={formatItemsForReactSelect(
+                organizeRecursiveItems(categories, 'parent_id'),
+                'id',
+                'name'
+              )}
+              required={register('category_id', {
+                // required: requiredSelectionMessage,
+              })}
+              // validationErrorMessage={errors['category_id']?.message}
+            />
+          </div>
 
           {/* description */}
           <div className="flex flex-col gap-y-[5px]">
