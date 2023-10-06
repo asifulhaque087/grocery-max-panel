@@ -54,6 +54,7 @@ export const ProductInformation = ({
       // slug: product?.slug ? product.slug : '',
       slug: '',
       // description: product?.description ? product.description : '',
+      category_id: [],
       description: '',
     },
   });
