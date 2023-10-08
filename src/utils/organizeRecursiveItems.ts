@@ -1,7 +1,7 @@
 export const organizeRecursiveItems = (
   categories: any,
   parentIdKey: string,
-  parentId = null
+  parentId: number | null = null
 ) => {
   const organizedCategories = [];
 
