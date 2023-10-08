@@ -16,6 +16,7 @@ import { Pagination } from './Pagination';
 import { Tab } from './form/Tab';
 import { Editor } from './form/Editor';
 import { SelectField } from './form/SelectField';
+import { FilesField } from './form/FilesField';
 
 export {
   Button,
@@ -32,4 +33,5 @@ export {
   Editor,
   LabelInput,
   SelectField,
+  FilesField,
 };
