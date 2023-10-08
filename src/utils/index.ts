@@ -8,6 +8,7 @@ import { generateCombinations } from './generateCombinations';
 import { sortString } from './sortString';
 import { organizeRecursiveItems } from './organizeRecursiveItems';
 import { formatItemsForReactSelect } from './formatItemsForReactSelect';
+import { isHttpUrl } from './isHttpUrl';
 export {
   fontColorSelector,
   bgColorSelector,
@@ -15,4 +16,5 @@ export {
   sortString,
   formatItemsForReactSelect,
   organizeRecursiveItems,
+  isHttpUrl,
 };
