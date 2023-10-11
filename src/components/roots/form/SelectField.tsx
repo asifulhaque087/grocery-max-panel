@@ -114,6 +114,9 @@ export const SelectField = (props: IProps) => {
                 }}
                 options={props.selectOptions}
                 onChange={(e: any) => {
+
+                  // console.log(e.length)
+
                   const increased = e?.length > value?.length;
 
                   if (!increased && props.isMulti) {
@@ -131,9 +134,9 @@ export const SelectField = (props: IProps) => {
                       }
                     }
 
-                    console.log(window.confirm('Press a button!'));
+                    // console.log(window.confirm('Press a button!'));
 
-                    console.log('removed ', res);
+                    // console.log('removed ', res);
                   }
 
                   return e.value
