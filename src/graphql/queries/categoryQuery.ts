@@ -8,6 +8,7 @@ export const GET_CATEGORIES = gql`
       id
       name
       icon
+      coverImage
       parentId
     }
   }
