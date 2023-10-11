@@ -2,7 +2,12 @@ import { SelectField } from '@src/components/roots';
 import { formatItemsForReactSelect, organizeRecursiveItems } from '@src/utils';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
-import { Controller, FieldValues, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 
 const meta: Meta<typeof SelectField> = {
   title: 'Roots/Form/SelectField',
@@ -302,36 +307,59 @@ const Wrapper = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      brand_id: '',
+      // brand_id: '',
       category_id: [],
     },
   });
   const requiredSelectionMessage: string = 'Select an option';
 
+  const onFormSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log('the data is ', data);
+  };
+
   return (
     <>
-      <SelectField
-        isMulti={false}
-        control={control}
-        controller={Controller}
-        selectLabel="Categories"
-        selectName="brand_id"
-        // defaultValue={[{ value: 'RED', label: 'Red' }]}
-        // selectOptions={brands?.map((brand) => ({
-        //   value: brand.id,
-        //   label: brand.name,
-        // }))}
+      <form onSubmit={handleSubmit(onFormSubmit)}>
+        <SelectField
+          // isMulti={false}
+          isMulti={true}
+          control={control}
+          controller={Controller}
+          selectLabel="Categories"
+          // selectName="brand_id"
+          selectName="category_id"
+          // defaultValue={[{ value: 'RED', label: 'Red' }]}
+          // defaultValue={[
+          //   {
+          //     value: 2,
+          //     label: 'Home & Garden',
+          //   },
+          // ]}
+          // selectOptions={brands?.map((brand) => ({
+          //   value: brand.id,
+          //   label: brand.name,
+          // }))}
 
-        selectOptions={formatItemsForReactSelect(
-          // organizeRecursiveItems(categories, 'parent_id'),
-          organizeRecursiveItems(categories, 'parentId', 0),
-          'id',
-          'title'
-        )}
-        // required={register('brand_id', {
-        //   required: requiredSelectionMessage,
-        // })}
-      />
+          selectOptions={formatItemsForReactSelect(
+            // organizeRecursiveItems(categories, 'parent_id'),
+            organizeRecursiveItems(categories, 'parentId', 0),
+            'id',
+            'title'
+          )}
+          // required={register('brand_id', {
+          //   required: requiredSelectionMessage,
+          // })}
+        />
+        <button
+          type="submit"
+          className="outline-none border-0 px-[16px] py-[8px] rounded-[6px] bg-[#7367f0]  shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent] mt-[15px]"
+          // onClick={() => setActiveIndex(1)}
+        >
+          <span className="text-[15px] font-[500] text-white capitalize">
+            add
+          </span>
+        </button>
+      </form>
     </>
   );
 };
@@ -342,5 +370,5 @@ export const Primary: Story = {
       appDirectory: true,
     },
   },
-  render: (args) => <Wrapper {...args} />,
+  render: () => <Wrapper />,
 };
