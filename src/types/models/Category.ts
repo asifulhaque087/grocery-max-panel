@@ -10,5 +10,6 @@ export interface ICategory {
   id: number;
   name: string;
   icon: string;
+  coverImage?: string;
   parentId?: number | null; // Make parentId optional if it can be null in GraphQL
 }
