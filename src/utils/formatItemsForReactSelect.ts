@@ -1,7 +1,4 @@
-interface IReactSelect {
-  value: string | number;
-  label: string | number;
-}
+import { IReactSelect } from '@src/types/lib';
 
 export const formatItemsForReactSelect = (
   items: any,
