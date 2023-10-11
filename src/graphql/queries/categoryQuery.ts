@@ -1,13 +1,13 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // ============================= GET CATEGORIES QUERY =================>
 
 export const GET_CATEGORIES = gql`
   {
-    getCategories {
+    categories {
       id
       name
-      photo
+      icon
       parentId
     }
   }

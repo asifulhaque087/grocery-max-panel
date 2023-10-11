@@ -2,19 +2,24 @@ import { gql } from '@apollo/client';
 
 // ============================= CREATE CATEGORY MUTATION =================>
 export const CREATE_CATEGORY = gql`
-  mutation createCategory($photo: String!, $name: String!, $parentId: ID) {
-    createCategory(input: { photo: $photo, name: $name, parentId: $parentId }) {
-      errors {
-        field
-        message
+  mutation createCategory(
+    $name: String!
+    $icon: String!
+    $coverImage: String
+    $parentId: Int
+  ) {
+    createCategory(
+      createCategoryInput: {
+        name: $name
+        icon: $icon
+        coverImage: $coverImage
+        parentId: $parentId
       }
-      category {
-        id
-        name
-        parentId
-        photo
-        createdAt
-      }
+    ) {
+      id
+      name
+      icon
+      parentId
     }
   }
 `;

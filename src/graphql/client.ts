@@ -41,7 +41,8 @@ let uri: any;
 if (process.env.NODE_ENV === 'production') {
   uri = 'https://grocery-max-server.onrender.com/graphql';
 } else {
-  uri = 'http://localhost:5000/graphql';
+  // uri = 'http://localhost:5000/graphql';
+  uri = 'http://localhost:5001/graphql';
 }
 
 const httpLink = createHttpLink({
