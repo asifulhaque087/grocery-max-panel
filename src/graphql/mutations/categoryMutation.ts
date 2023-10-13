@@ -19,6 +19,7 @@ export const CREATE_CATEGORY = gql`
       id
       name
       icon
+      coverImage
       parentId
     }
   }
@@ -40,24 +41,26 @@ export const DELETE_CATEGORY = gql`
 // ============================= UPDATE CATEGORY MUTATION =================>
 export const UPDATE_CATEGORY = gql`
   mutation updateCategory(
-    $id: ID!
-    $name: String!
-    $photo: String!
-    $parentId: ID!
+    $id: Int!
+    $name: String
+    $icon: String
+    $coverImage: String
+    $parentId: Int
   ) {
     updateCategory(
-      input: { id: $id, name: $name, photo: $photo, parentId: $parentId }
+      updateCategoryInput: {
+        id: $id
+        name: $name
+        icon: $icon
+        coverImage: $coverImage
+        parentId: $parentId
+      }
     ) {
-      errors {
-        field
-        message
-      }
-      category {
-        id
-        name
-        photo
-        createdAt
-      }
+      id
+      name
+      icon
+      coverImage
+      parentId
     }
   }
 `;
