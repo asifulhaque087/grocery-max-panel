@@ -4,6 +4,7 @@ import './globals.css';
 import { Public_Sans } from 'next/font/google';
 import { ApolloProvider } from '@apollo/client';
 import client from '@src/graphql/client';
+import ToasterProvider from '@src/providers/ToasterProvider';
 
 // const inter = Inter({ subsets: ['latin'] });
 const publicSans = Public_Sans({ subsets: ['latin'] });
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={publicSans.className}>
+        <ToasterProvider />
         <ApolloProvider client={client}>{children}</ApolloProvider>
       </body>
     </html>
