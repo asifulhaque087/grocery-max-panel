@@ -11,6 +11,23 @@
   }
 }
 
+#spinner {
+  height: 100px;
+
+  width: 100px;
+  /* background-color: red; */
+  border-radius: 50%;
+  border: 5px solid #ddd;
+  border-top-color: #7367f0;
+  animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+  100% {
+    rotate: 360deg;
+  }
+}
+
 .tags-input {
   display: grid;
   grid-template-rows: repeat(2, 50px);
