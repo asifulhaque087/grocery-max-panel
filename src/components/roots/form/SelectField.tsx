@@ -5,11 +5,8 @@ import React, { useEffect, useRef } from 'react';
 import Select from 'react-select';
 import { CustomSelectValueContainer } from './CustomSelectValueContainer';
 import { useIsBrowser } from '@src/hooks';
+import { IReactSelect } from '@src/types/lib';
 
-export type SelectOptionType = {
-  value: string | number;
-  label: string | number;
-};
 type IProps = {
   key?: string;
   formGroupClasses?: string;
@@ -18,9 +15,9 @@ type IProps = {
   control: any;
   controller: any;
   selectLabel: string;
-  defaultValue?: SelectOptionType[];
+  defaultValue?: IReactSelect[];
   selectName: string;
-  selectOptions: SelectOptionType[];
+  selectOptions: IReactSelect[];
   // value?: SelectOptionType[];
   isMulti?: boolean;
   value?: any;
@@ -32,6 +29,9 @@ export const SelectField = (props: IProps) => {
   const Controller = props.controller;
 
   if (!isBrowser) return null;
+
+  console.log('the default value is ', props.defaultValue);
+  console.log('the options value are ', props.selectOptions);
 
   return (
     <div className={`multiple-select-field ${props.formGroupClasses}`}>
@@ -62,6 +62,8 @@ export const SelectField = (props: IProps) => {
           //   }
           // }, [value]);
 
+          console.log('values are ', value);
+
           return (
             <>
               <Select
@@ -70,14 +72,36 @@ export const SelectField = (props: IProps) => {
                 // isMulti
                 isMulti={props.isMulti}
                 ref={ref}
+                // value={
+                //   !value
+                //     ? null
+                //     : props.selectOptions.find((o) => {
+                //         console.log(value);
+                //         return o.value === value;
+                //       })
+                // }
+
                 value={
                   !value
                     ? null
+                    : props.isMulti
+                    ? props.selectOptions.filter((o) => {
+                        console.log(value);
+                        return value.includes(o.value);
+                      })
                     : props.selectOptions.find((o) => {
                         console.log(value);
                         return o.value === value;
                       })
                 }
+                // value={
+                //   !value
+                //     ? null
+                //     : [
+                //         { value: 3, label: '- child dress' },
+                //         { value: 4, label: '-- 12 year child' },
+                //       ]
+                // }
                 name={name}
                 {...props.customReactSelectProps}
                 components={{ ValueContainer: CustomSelectValueContainer }}
@@ -114,7 +138,6 @@ export const SelectField = (props: IProps) => {
                 }}
                 options={props.selectOptions}
                 onChange={(e: any) => {
-
                   const increased = e?.length > (value?.length ?? 0);
                   // const increased = e?.length > valueLength;
 
