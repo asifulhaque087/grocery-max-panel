@@ -5,6 +5,7 @@ import { CategoryAddForm, TableLoading } from '@src/components/compounds';
 import { GET_CATEGORIES } from '@src/graphql/queries/categoryQuery';
 // import { categories } from '@src/stories/roots/form/SelectField.stories';
 import { formatItemsForReactSelect, organizeRecursiveItems } from '@src/utils';
+import Link from 'next/link';
 import { BiListUl } from 'react-icons/bi';
 
 export const CategoryAddPage = () => {
@@ -39,14 +40,16 @@ export const CategoryAddPage = () => {
         <div className="flex items-center  rounded-[5px] px-[20px] py-[20px] bg-white">
           {/* create button */}
           <div className="">
-            <button className="outline-none border-0 px-[16px] py-[8px] rounded-[6px] bg-[#7367f0] flex items-center gap-[8px] shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent]">
-              <span className="text-white capitalize">
-                <BiListUl size={18} />
-              </span>
-              <span className="text-[15px] font-[500] text-white capitalize">
-                list category
-              </span>
-            </button>
+            <Link href="/category/">
+              <button className="outline-none border-0 px-[16px] py-[8px] rounded-[6px] bg-[#7367f0] flex items-center gap-[8px] shadow-[0_2px_6px_rgba(47,43,61,.14),0_0_transparent,0_0_transparent]">
+                <span className="text-white capitalize">
+                  <BiListUl size={18} />
+                </span>
+                <span className="text-[15px] font-[500] text-white capitalize">
+                  list category
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
 
