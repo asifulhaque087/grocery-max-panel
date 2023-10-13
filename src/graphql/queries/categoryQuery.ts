@@ -35,13 +35,13 @@ export const GET_CATEGORIES_BY_ADMIN = gql`
 // ============================= GET CATEGORY QUERY =================>
 
 export const GET_CATEGORY = gql`
-  query getCategory($id: ID!) {
-    getCategory(id: $id) {
+  query getCategory($id: Int!) {
+    category(id: $id) {
       id
       name
-      photo
+      icon
+      coverImage
       parentId
-      createdAt
     }
   }
 `;
