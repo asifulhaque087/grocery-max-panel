@@ -1,4 +1,3 @@
-
 interface IColumn {
   name: string;
   selector: (row: any) => any;
@@ -7,5 +6,5 @@ interface IColumn {
 export interface INormalTable {
   columns: IColumn[];
   tableData: any;
-  TableHeader: () => JSX.Element;
+  TableHeader?: () => JSX.Element;
 }
