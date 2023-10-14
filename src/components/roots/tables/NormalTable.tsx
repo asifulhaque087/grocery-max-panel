@@ -26,7 +26,7 @@ export const NormalTable = ({
   return (
     <div className="shadow-custom py-[30px] border rounded-[6px]">
       {/* header */}
-      <TableHeader />
+      {TableHeader && <TableHeader />}
 
       {/* table */}
       <div className="overflow-x-auto py-[10px]">
