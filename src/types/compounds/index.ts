@@ -12,6 +12,7 @@ import { IProductAttribute } from './form/ProductAttribute';
 import { IProductValues } from './form/ProductValues';
 import { IProductImage } from './form/ProductImages';
 import { ICategoryAddForm } from './form/CategoryAddForm';
+import { IAttributeForm } from './form/attribute/AttributeForm';
 
 export type {
   IBannerSlider,
@@ -24,4 +25,5 @@ export type {
   IProductValues,
   IProductImage,
   ICategoryAddForm,
+  IAttributeForm,
 };
