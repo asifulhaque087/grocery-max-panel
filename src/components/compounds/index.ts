@@ -11,6 +11,7 @@ import { ProductCombinationList } from './form/ProductCombinationList';
 import { ProductImages } from './form/ProductImages';
 import { CombinationForm } from './form/CombinationForm';
 import { CategoryAddForm } from './form/CategoryAddForm';
+import { AttributeForm } from './form/attribute/AttributeForm';
 
 export {
   RecursiveSidebar,
@@ -22,4 +23,5 @@ export {
   ProductImages,
   CombinationForm,
   CategoryAddForm,
+  AttributeForm,
 };
