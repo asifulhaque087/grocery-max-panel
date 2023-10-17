@@ -1,26 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LabelInput } from '@src/components/roots';
 
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useMutation } from '@apollo/client';
-import {
-  CREATE_CATEGORY,
-  UPDATE_CATEGORY,
-} from '@src/graphql/mutations/categoryMutation';
 import toast from 'react-hot-toast';
 import { IAttributeForm } from '@src/types/compounds';
-import { CREATE_ATTRIBUTE } from '@src/graphql/mutations/AttributeMutation';
+import {
+  CREATE_ATTRIBUTE,
+  UPDATE_ATTRIBUTE,
+} from '@src/graphql/mutations/AttributeMutation';
+import { IAttribute } from '@src/types/models';
 
 export const AttributeForm = ({ attribute, fetchAgain }: IAttributeForm) => {
   // local states
   const [isLoading, setIsLoading] = useState(false);
   // const [categories, setCategories] = useState<ICategory[]>([]);
+  // const [attribute, setAttribute] = useState<IAttribute | null>(null);
   // const [categories, setCategories] = useState<any>([]);
   const [createCategory] = useMutation(CREATE_ATTRIBUTE);
-  const [updateCategory] = useMutation(UPDATE_CATEGORY);
+  const [updateAttribute] = useMutation(UPDATE_ATTRIBUTE);
 
   const isEdit = attribute ? true : false;
 
@@ -33,27 +34,34 @@ export const AttributeForm = ({ attribute, fetchAgain }: IAttributeForm) => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: attribute?.name ?? '',
+      // name: attribute?.name ? attribute.name : '',
+      // name: "hwok",
+      name: attribute?.name,
     },
   });
+
+  console.log('attribute is ', attribute?.name);
 
   const onFormSubmit: SubmitHandler<FieldValues> = async (data) => {
     // console.log('data is ', data);
 
     if (isEdit) {
-      const response = await updateCategory({
+      const response = await updateAttribute({
         variables: {
           id: attribute?.id,
           name: data.name,
         },
-        update: (_, { data: { updateCategory: newCategory } }) => {
-          if (newCategory?.category) {
+        update: (_, { data: { updateAttribute: newAttribute } }) => {
+          if (newAttribute?.attribute) {
             // router.push('/category');
           }
         },
       });
 
+      reset();
+      // setAttribute(null);
       toast.success('Attribute updated successfully');
+      if (fetchAgain) fetchAgain();
     } else {
       const response = await createCategory({
         variables: {
@@ -67,6 +75,15 @@ export const AttributeForm = ({ attribute, fetchAgain }: IAttributeForm) => {
       if (fetchAgain) fetchAgain();
     }
   };
+
+  useEffect(() => {
+    // if (attribute){
+    reset({
+      name: attribute?.name,
+    });
+
+    // }
+  }, [attribute]);
 
   return (
     <>
