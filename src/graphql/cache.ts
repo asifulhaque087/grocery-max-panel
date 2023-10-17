@@ -1,10 +1,26 @@
-import { InMemoryCache } from "@apollo/client";
+import { InMemoryCache } from '@apollo/client';
 
 export default new InMemoryCache({
   typePolicies: {
     //   those are the ROOT_QUERY
     Query: {
       fields: {
+        attributes: {
+          merge(existing, incoming) {
+            // console.log('existing are ', existing);
+            // console.log('incoming are ', incoming);
+            return incoming;
+          },
+        },
+
+        categories: {
+          merge(existing, incoming) {
+            // console.log('existing are ', existing);
+            // console.log('incoming are ', incoming);
+            return incoming;
+          },
+        },
+
         getCategories: {
           merge: (existing, incoming) => {
             return incoming;
@@ -40,15 +56,30 @@ export default new InMemoryCache({
             return incoming;
           },
         },
+
+        attribute(_, { args, toReference }) {
+          return toReference({
+            __typename: 'Attribute',
+            id: args.id,
+          });
+        },
+
+        category(_, { args, toReference }) {
+          return toReference({
+            __typename: 'Category',
+            id: args.id,
+          });
+        },
+
         getCategory(_, { args, toReference }) {
           return toReference({
-            __typename: "Category",
+            __typename: 'Category',
             id: args.id,
           });
         },
         getBanner(_, { args, toReference }) {
           return toReference({
-            __typename: "Banner",
+            __typename: 'Banner',
             id: args.id,
           });
         },
@@ -67,13 +98,13 @@ export default new InMemoryCache({
 
         getSubcategory(_, { args, toReference }) {
           return toReference({
-            __typename: "Subcategory",
+            __typename: 'Subcategory',
             id: args.id,
           });
         },
         getSubcategoryNormal(_, { args, toReference }) {
           return toReference({
-            __typename: "Subcategory",
+            __typename: 'Subcategory',
             id: args.id,
           });
         },
@@ -86,19 +117,19 @@ export default new InMemoryCache({
         // },
         getProductByAdmin(_, { args, toReference }) {
           return toReference({
-            __typename: "Product",
+            __typename: 'Product',
             id: args.id,
           });
         },
         getProductDetails(_, { args, toReference }) {
           return toReference({
-            __typename: "Product",
+            __typename: 'Product',
             id: args.id,
           });
         },
         getOrder(_, { args, toReference }) {
           return toReference({
-            __typename: "Order",
+            __typename: 'Order',
             id: args.id,
           });
         },
