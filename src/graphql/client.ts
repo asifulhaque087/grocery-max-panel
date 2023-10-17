@@ -63,6 +63,7 @@ export const client = new ApolloClient({
   // link: authLink.concat(httpLink),
   link: httpLink,
   cache,
+  connectToDevTools: true,
 });
 
 export default client;
