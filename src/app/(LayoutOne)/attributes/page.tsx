@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { AttributeForm } from '@src/components/compounds';
 import { NormalTable } from '@src/components/roots';
@@ -14,6 +15,7 @@ import Select, {
   StylesConfig,
   components,
 } from 'react-select';
+import { IAttribute } from '@src/types/models';
 
 const page = () => {
   const {
@@ -24,6 +26,8 @@ const page = () => {
 
   const [removeAttribute, { loading: mutationLoading }] =
     useMutation(REMOVE_ATTRIBUTE);
+
+  const [attribute, setAttribute] = useState<IAttribute | null>(null);
 
   const columns = [
     {
@@ -58,7 +62,7 @@ const page = () => {
           >
             <BiSolidTrashAlt size={20} className={`text-red-500`} />
           </button>
-          <button className="ml-2">
+          <button className="ml-2" onClick={() => setAttribute(row)}>
             <BiSolidPencil size={20} className="text-yellow-500" />
           </button>
         </div>
@@ -266,6 +270,10 @@ const page = () => {
     fetchMore({});
   };
 
+  const emptyAttribute = () => {
+    setAttribute(null);
+  };
+
   if (queryLoading) return <div>loading</div>;
 
   console.log('the attributes are ', attributes);
@@ -308,7 +316,10 @@ const page = () => {
           </button>
         </div> */}
 
-        <AttributeForm fetchAgain={fetchAgain} />
+        <AttributeForm
+          fetchAgain={attribute ? emptyAttribute : fetchAgain}
+          attribute={attribute}
+        />
       </div>
     </div>
   );
