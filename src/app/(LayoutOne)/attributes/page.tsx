@@ -22,7 +22,8 @@ const page = () => {
   const {
     loading: queryLoading,
     data: { attributes: attributes } = {},
-    fetchMore,
+    // fetchMore,
+    refetch,
   } = useQuery(GET_ATTRIBUTES);
 
   const [removeAttribute, { loading: mutationLoading }] =
@@ -50,7 +51,10 @@ const page = () => {
         <div className="flex items-center gap-x-[10px] flex-wrap gap-y-[10px]">
           {row.values &&
             row.values.map((value: IAttributeValue) => (
-              <div className="flex items-center rounded border border-indigo-400">
+              <div
+                key={value.id}
+                className="flex items-center rounded border border-indigo-400"
+              >
                 <span className="text-white text-[12px] bg-indigo-400 px-[3px]">
                   {value.name}
                 </span>
@@ -264,7 +268,8 @@ const page = () => {
   };
 
   const fetchAgain = () => {
-    fetchMore({});
+    // fetchMore({});
+    refetch();
   };
 
   const emptyAttribute = () => {

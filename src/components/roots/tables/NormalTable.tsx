@@ -19,7 +19,7 @@ export const NormalTable = ({
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return tableData.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, tableData]);
 
   if (!isBroswer) return null;
 
