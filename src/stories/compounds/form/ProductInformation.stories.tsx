@@ -37,6 +37,5 @@ export const Primary: Story = {
       appDirectory: true,
     },
   },
-  args: {},
   render: (args) => <Wrapper {...args} />,
 };
