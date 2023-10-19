@@ -5,15 +5,17 @@ export const organizeRecursiveItems = (
 ) => {
   const organizedCategories = [];
 
-  for (const category of categories) {
+  for (let category of categories) {
+    category = { ...category };
     if (category[parentIdKey] === parentId) {
       const childrens = organizeRecursiveItems(
         categories,
         parentIdKey,
         category.id
       );
+
       if (childrens.length > 0) {
-        category.childrens = childrens;
+        category['childrens'] = childrens;
       }
       organizedCategories.push(category);
     }
