@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { AttributeForm } from '@src/components/compounds';
+import { AttributeForm, AttributeValueForm } from '@src/components/compounds';
 import { NormalTable } from '@src/components/roots';
 import { REMOVE_ATTRIBUTE } from '@src/graphql/mutations/AttributeMutation';
 import { GET_ATTRIBUTES } from '@src/graphql/queries/attributeQuery';
@@ -15,7 +15,8 @@ import Select, {
   StylesConfig,
   components,
 } from 'react-select';
-import { IAttribute } from '@src/types/models';
+import { IAttribute, IAttributeValue } from '@src/types/models';
+import { REMOVE_ATTRIBUTE_VALUE } from '@src/graphql/mutations/AttributeValueMutation';
 
 const page = () => {
   const {
@@ -26,6 +27,10 @@ const page = () => {
 
   const [removeAttribute, { loading: mutationLoading }] =
     useMutation(REMOVE_ATTRIBUTE);
+
+  const [removeAttributeValue, { loading: removeValueLoading }] = useMutation(
+    REMOVE_ATTRIBUTE_VALUE
+  );
 
   const [attribute, setAttribute] = useState<IAttribute | null>(null);
 
@@ -38,12 +43,71 @@ const page = () => {
       name: 'Name',
       selector: (row: any) => row.name,
     },
+
+    {
+      name: 'Values',
+      selector: (row: any) => (
+        <div className="flex items-center gap-x-[10px] flex-wrap gap-y-[10px]">
+          {row.values &&
+            row.values.map((value: IAttributeValue) => (
+              <div className="flex items-center rounded border border-indigo-400">
+                <span className="text-white text-[12px] bg-indigo-400 px-[3px]">
+                  {value.name}
+                </span>
+                <div className="flex items-center gap-x-[3px] px-[5px]">
+                  <BiSolidTrashAlt
+                    size={12}
+                    className={`text-red-500 cursor-pointer`}
+                    onClick={async () => {
+                      if (window.confirm('Are you sure ?') == true) {
+                        // storeIdVar(row.id);
+                        await removeAttributeValue({
+                          variables: { id: Number(value.id) },
+                          update: (proxy) => {
+                            proxy.evict({
+                              id: `AttributeValue:${value.id}`,
+                            });
+                          },
+                        });
+                      }
+                    }}
+                  />
+
+                  <BiSolidPencil
+                    size={12}
+                    className="text-yellow-500 cursor-pointer"
+                  />
+                </div>
+              </div>
+            ))}
+
+          {/* {Array.from(Array(10).keys()).map((item) => {
+            return (
+              <>
+                {row.values &&
+                  row.values.map((value: IAttributeValue) => (
+                    <div className="flex items-center rounded border border-indigo-400">
+                      <span className="text-white text-[12px] bg-indigo-400 px-[3px]">
+                        {value.name}
+                      </span>
+                      <div className="flex items-center gap-x-[3px] px-[5px]">
+                        <BiSolidTrashAlt size={12} className={`text-red-500`} />
+                        <BiSolidPencil size={12} className="text-yellow-500" />
+                      </div>
+                    </div>
+                  ))}
+              </>
+            );
+          })} */}
+        </div>
+      ),
+    },
+
     {
       name: 'Action',
       selector: (row: any) => (
-        <div>
+        <div className="flex items-center gap-x-[5px]">
           <button
-            className="mr-2"
             onClick={async () => {
               console.log('the id is ', row.id);
 
@@ -62,7 +126,7 @@ const page = () => {
           >
             <BiSolidTrashAlt size={20} className={`text-red-500`} />
           </button>
-          <button className="ml-2" onClick={() => setAttribute(row)}>
+          <button onClick={() => setAttribute(row)}>
             <BiSolidPencil size={20} className="text-yellow-500" />
           </button>
         </div>
@@ -128,73 +192,6 @@ const page = () => {
       },
     }),
   };
-
-  const tableData = [
-    {
-      id: 1,
-      name: 'John Doe',
-      photo:
-        'https://chaldn.com/_mpimage/soft-drinks?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D27882&q=best&v=1&m=400&webp=1',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-
-    {
-      id: 3,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-
-    {
-      id: 4,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-
-    {
-      id: 5,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-    {
-      id: 6,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-    {
-      id: 7,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-    {
-      id: 8,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-    {
-      id: 9,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-    {
-      id: 10,
-      name: 'Jane Smith',
-      photo:
-        'https://chaldn.com/_mpimage/coffee?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D31521&q=best&v=1&m=400&webp=1',
-    },
-    // Add more rows as needed
-  ];
 
   const TableHeader = () => {
     const options = [
@@ -292,7 +289,7 @@ const page = () => {
         />
       </div>
       {/* bottom */}
-      <div className="w-[40%]  rounded-[10px] bg-white shadow-custom">
+      <div className="w-[40%] flex flex-col  gap-y-[20px]">
         {/* <h4 className="text-[16px] font-[500] text-[#24334A] capitalize py-[12px] px-[25px] border-b">
           Add new attributes
         </h4> */}
@@ -316,10 +313,23 @@ const page = () => {
           </button>
         </div> */}
 
-        <AttributeForm
-          fetchAgain={attribute ? emptyAttribute : fetchAgain}
-          attribute={attribute}
-        />
+        <div className="w-full rounded-[10px] bg-white shadow-custom">
+          <AttributeForm
+            fetchAgain={attribute ? emptyAttribute : fetchAgain}
+            attribute={attribute}
+          />
+        </div>
+
+        <div className="w-full rounded-[10px] bg-white shadow-custom">
+          <AttributeValueForm
+            attributes={attributes?.map((attribute: IAttribute) => ({
+              value: attribute.id,
+              label: attribute.name,
+            }))}
+            fetchAgain={attribute ? emptyAttribute : fetchAgain}
+            // value={}
+          />
+        </div>
       </div>
     </div>
   );
