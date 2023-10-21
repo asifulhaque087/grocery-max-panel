@@ -23,7 +23,7 @@ import { ProductAddPage } from '@src/components/pages';
 
 const page = () => {
   // return <ProductAddPage fromEdit={false} />;
-  return <ProductAddPage fromEdit={true} />;
+  return <ProductAddPage />;
 };
 
 export default page;

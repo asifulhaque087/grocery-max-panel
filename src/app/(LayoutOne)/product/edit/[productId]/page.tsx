@@ -30,7 +30,7 @@ const page = ({ params }: { params: { productId: string } }) => {
     <div>
       {/* <ProductEditPage productId={params.productId} /> */}
       {/* this is product page */}
-      <ProductAddPage fromEdit={true} />
+      <ProductAddPage product={product} />
     </div>
   );
 };
