@@ -2,6 +2,7 @@ import {
   IAttributeValue,
   IProductErAttribute,
 } from '@src/graphql/reactivities/productVariable';
+import { IProduct } from '@src/types/models';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface IAttributeSelectFormat {
@@ -15,4 +16,5 @@ export interface IProductAttributeAndSendValues extends IProductErAttribute {
 
 export interface IProductAttribute {
   setActiveIndex: Dispatch<SetStateAction<number>>;
+  product?: IProduct;
 }
