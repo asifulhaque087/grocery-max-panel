@@ -120,6 +120,8 @@ export const ProductInformation = ({
       reset();
       toast.success('Product added successfully');
 
+      router.push(`/product/edit/${2}?tab=1`);
+
       // if (fetchAgain) fetchAgain();
     }
   };
