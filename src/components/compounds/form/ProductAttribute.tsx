@@ -83,7 +83,7 @@ const colourStyles: StylesConfig = {
 // attributeId = apiAttribute.id
 // r productId asbe product global state theke
 
-export const ProductAttribute = ({}: IProductAttribute) => {
+export const ProductAttribute = ({ product }: IProductAttribute) => {
   // fetch data
   let { loading, data: { attributes: apiAttributes } = {} } =
     useQuery(GET_ATTRIBUTES);
@@ -91,9 +91,7 @@ export const ProductAttribute = ({}: IProductAttribute) => {
   // create product
   const [createProductAttribute] = useMutation(CREATE_PRODUCT_ATTRIBUTE);
 
-  const product = useReactiveVar(singleProductVar);
-
-    console.log('hello world');
+  console.log('the product is ', product);
   // states
 
   const [allAttributeOptions, setallAttributeOptions] = useState<
