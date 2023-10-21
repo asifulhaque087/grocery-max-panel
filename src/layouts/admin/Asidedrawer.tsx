@@ -85,7 +85,7 @@ const Asidedrawer = () => {
       childrens: [
         {
           name: 'add product',
-          to: '/product/add',
+          to: '/product/add?tab=0',
         },
         {
           name: 'list product',
